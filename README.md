@@ -9,9 +9,9 @@ Proyecto final de DAW: un pequeño juego inspirado por cookie clicker, con el ob
 - node v20.19
 
 # Intrucciones:
-1 - clona el repositorio
-2 - cambia al directorio de backend y ejecuta npm install
-3 - cambia al directorio de frontend y ejecuta npm install
-4 - clona el archivo env-example.txt y usalo para hacer tu .env
-5 - ejecuta make create
-6 - ejecuta make srv
+- clona el repositorio
+- cambia al directorio de backend y ejecuta npm install
+- cambia al directorio de frontend y ejecuta npm install
+- clona el archivo env-example.txt y usalo para hacer tu .env
+- ejecuta make create
+- ejecuta make srv
