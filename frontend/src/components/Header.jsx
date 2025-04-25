@@ -1,3 +1,5 @@
+import { Link } from 'react-router-dom';
+
 function Header({ count, clicksPerSecond }) {
     return (
         <header className="bg-[#202020] flex flex-row py-4 justify-between items-center">
