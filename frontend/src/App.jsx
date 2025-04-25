@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react'
 import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
 import './App.css'
-import { Header, Objective, Upgrades } from './components';
+import { Header, Objective, Upgrades, Shop } from './components';
 
 import doorbell from './assets/icons/doorbell.png'
 
@@ -26,8 +26,9 @@ function App() {
           content="Timbra 1000000 de veces!!"
         />
         <div className="flex ml-auto w-[55%] menu_shadow h-full">
-          <div className="flex w-4/6 ml-auto mr-20 mt-10">
+          <div className="flex flex-col gap-12 w-4/6 ml-auto mr-20 mt-10">
             <Upgrades />
+            <Shop />
           </div>
         </div>
       </div>
