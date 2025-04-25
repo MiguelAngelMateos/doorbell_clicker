@@ -1,4 +1,5 @@
 import upgrade1 from '../assets/icons/upgrade1.png';
+import incognite from '../assets/icons/incognite.png';
 
 function Upgrades() {
     return(
@@ -8,20 +9,20 @@ function Upgrades() {
                 <span className="mt-auto">Siguiente mejora: 6/1000</span>
             </div>
             <div className="flex mt-4 justify-between">
-            <div className="button w-26 h-26">
-  <img src={upgrade1} className="button_top w-full h-full object-contain"></img>
-</div>
-                <div className="button w-26 h-26">
-                    <img src={upgrade1} className="button_top w-full h-full object-cover"></img>
+                <div className="button_upgrades w-26 h-26">
+                    <img src={upgrade1} className="button_top_upgrades w-full h-full object-contain"></img>
                 </div>
-                <div className="button w-26 h-26">
-                    <img src={upgrade1} className="button_top w-full h-full object-cover"></img>
+                <div className="button_upgrades w-26 h-26">
+                    <img src={incognite} className="button_top_upgrades w-full h-full object-contain"></img>
                 </div>
-                <div className="button w-26 h-26">
-                    <img src={upgrade1} className="button_top w-full h-full object-cover"></img>
+                <div className="button_upgrades w-26 h-26">
+                    <img src={incognite} className="button_top_upgrades w-full h-full object-contain"></img>
                 </div>
-                <div className="button w-26 h-26">
-                    <img src={upgrade1} className="button_top w-full h-full object-cover"></img>
+                <div className="button_upgrades w-26 h-26">
+                    <img src={incognite} className="button_top_upgrades w-full h-full object-contain"></img>
+                </div>
+                <div className="button_upgrades w-26 h-26">
+                    <img src={incognite} className="button_top_upgrades w-full h-full object-contain"></img>
                 </div>
             </div>
         </div>
