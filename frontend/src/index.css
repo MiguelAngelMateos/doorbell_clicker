@@ -26,3 +26,45 @@ body {
 .bubble-text {
   font-family: 'Game Bubble', sans-serif;
 }
+
+.button {
+  /* Variables */
+  --button_radius: 0.75em;
+  --button_color: #F2F2F2;
+  --button_outline_color: #000000;
+  font-size: 17px;
+  font-weight: bold;
+  border: none;
+  cursor: pointer;
+  border-radius: var(--button_radius);
+  background: var(--button_outline_color);
+}
+.button .button_top {
+  display: block;
+  box-sizing: border-box;
+  border: 2px solid var(--button_outline_color);
+  border-radius: var(--button_radius);
+  padding: 2.25em 1.5em; /* Parte blanca más alta (triple altura) */
+  background: var(--button_color);
+  color: var(--button_outline_color);
+  transform: translateY(-0.2em);
+  transition: transform 0.1s ease;
+}
+.button:hover .button_top {
+  /* Pull the button upwards when hovered */
+  transform: translateY(-0.33em);
+}
+.button:active .button_top {
+  /* Push the button downwards when pressed */
+  transform: translateY(0);
+}
+
+.menu_shadow {
+  background: linear-gradient(
+    to left, 
+    rgba(69, 63, 57, 0.6) 47%, 
+    rgba(69, 63, 57, 0.3) 76%, 
+    rgba(69, 63, 57, 0.1) 88%, 
+    rgba(69, 63, 57, 0) 100%
+  );
+}

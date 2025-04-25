@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react'
 import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
 import './App.css'
-import { Header, Objective } from './components';
+import { Header, Objective, Upgrades } from './components';
 
 import doorbell from './assets/icons/doorbell.png'
 
@@ -18,14 +18,19 @@ function App() {
 
   return (
     <>
-      <Header count={count} />
-      <button onClick={() => setCount(count + 1)}>
-        <img src={doorbell} alt="Doorbell" className=" h-104 w-auto absolute mt-36 ml-30" />
-      </button>
-      <Objective 
-        title="Objetivo final"
-        content="Timbra 1000000 de veces!!"
-      />
+      <div className="h-screen overflow-hidden">
+        <Header count={count} />
+        <img onClick={() => setCount(count + 1)} src={doorbell} alt="Doorbell" className="h-104 w-auto absolute mt-36 ml-30 cursor-pointer" />
+        <Objective 
+          title="Objetivo final"
+          content="Timbra 1000000 de veces!!"
+        />
+        <div className="flex ml-auto w-[55%] menu_shadow h-full">
+          <div className="flex w-4/6 ml-auto mr-20 mt-10">
+            <Upgrades />
+          </div>
+        </div>
+      </div>
     </>
   )
 }
