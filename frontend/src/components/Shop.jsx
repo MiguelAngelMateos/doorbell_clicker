@@ -4,7 +4,7 @@ import gum from '../assets/icons/gum.png';
 import roboticarm from '../assets/icons/roboticarm.png';
 import ShopItem from './ShopItem';
 
-function Shop() {
+function Shop({ setProduction }) {
     return (
         <div className='flex items-center justify-center flex-col'>
             <h2 className="text-6xl bubble-text mb-10">Tienda</h2>

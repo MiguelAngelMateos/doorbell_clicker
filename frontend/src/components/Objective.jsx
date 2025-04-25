@@ -1,4 +1,4 @@
-import doorbell from '../assets/icons/doorbell.png'
+import simplebell from '../assets/icons/simplebell.png'
 
 function Objective({title, content}) {
     return (
@@ -6,7 +6,7 @@ function Objective({title, content}) {
             <div className="bubble-text text-[#FFCC26] flex flex-col items-center py-2 border-10 border-[#1B5A82] rounded-xl">
                 <span className="text-3xl">{title}</span>
                 <div className="flex items-center gap-4  justify-center">
-                    <img src={doorbell} alt="Card doorbell" className="w-10 h-auto" />
+                    <img src={simplebell} alt="Card doorbell" className="w-20 h-auto" />
                     <p className="text-xl text-center w-1/2">{content}</p>
                 </div>
             </div>
