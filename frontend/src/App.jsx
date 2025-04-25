@@ -7,19 +7,63 @@ import { Header, Objective, Upgrades, Shop } from './components';
 import doorbell from './assets/icons/doorbell.png'
 
 function App() {
+  // Declarar variables y localstorage del contador principal de timbres
   const [count, setCount] = useState(() => {
     const savedCount = localStorage.getItem('count');
     return savedCount ? parseInt(savedCount, 10) : 0;
   });
 
+  // Declarar variables y localstorage del contador de timbres por segundos
+  const [clicksPerSecond, setClicksPerSecond] = useState(() => {
+    const savedCPS = localStorage.getItem('clicksPerSecond');
+    return savedCPS ? parseFloat(savedCPS) : 0;
+  });
+
+  // Recibe las compras de la tienda y aunmenta el contador de timbres por segundo
+  const calculateClicksPerSecond = (addValue, cost) => {
+    if (cost <= localStorage.getItem('count')) {
+      setClicksPerSecond(clicksPerSecond + addValue);
+      setCount(count - cost);
+    }
+  };
+
+  // Actualiza el contador de timbres
   useEffect(() => {
     localStorage.setItem('count', count);
-  }, [count]); 
+  }, [count]);
+
+  // Actualiza el contador de timbres por segundo
+  useEffect(() => {
+    localStorage.setItem('clicksPerSecond', clicksPerSecond);
+  }, [clicksPerSecond]);
+
+  // Actualiza automaticamente los timbres totales cada 0.10 segundos segun los timbres por segundo
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCount(prevCount => prevCount + clicksPerSecond / 20);
+    }, 50);
+  
+    return () => clearInterval(interval);
+  }, [clicksPerSecond]);
+
+  // Reinicia la partida al clickar la tecla R
+  useEffect(() => {
+    const handleKeyPress = (event) => {
+      if (event.key === 'r' || event.key === 'R') {
+        setCount(0);
+        setClicksPerSecond(0);
+      }
+    };
+    window.addEventListener('keydown', handleKeyPress);
+    return () => {
+      window.removeEventListener('keydown', handleKeyPress);
+    };
+  }, []);
 
   return (
     <>
       <div className="h-screen overflow-hidden">
-        <Header count={count} />
+        <Header count={count} clicksPerSecond={clicksPerSecond} />
         <img onClick={() => setCount(count + 1)} src={doorbell} alt="Doorbell" className="h-104 w-auto absolute mt-36 ml-30 cursor-pointer" />
         <Objective 
           title="Objetivo final"
@@ -28,7 +72,7 @@ function App() {
         <div className="flex ml-auto w-[55%] menu_shadow h-full">
           <div className="flex flex-col gap-12 w-4/6 ml-auto mr-20 mt-10">
             <Upgrades />
-            <Shop />
+            <Shop calculateClicksPerSecond={calculateClicksPerSecond} />
           </div>
         </div>
       </div>
