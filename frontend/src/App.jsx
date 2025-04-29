@@ -29,6 +29,25 @@ function App() {
     }
   };
 
+  // Mejoras
+  const [clickMultiplier, setClickMultiplier] = useState(1);
+
+  const upgrades = (upgradeId) => {
+    console.log('entra')
+    if (upgradeId === 1) {
+      console.log("mejora 1")
+      setClickMultiplier(2);
+    }else if (upgradeId === 2){
+      console.log("mejora 2")
+    }else if (upgradeId === 3){
+      console.log("mejora 3")
+    }else if (upgradeId === 4){
+      console.log("mejora 4") 
+    }else if (upgradeId === 5){
+      console.log("mejora 5")
+    }
+  }
+
   // Actualiza el contador de timbres
   useEffect(() => {
     localStorage.setItem('count', count);
@@ -72,7 +91,7 @@ function App() {
             <div className="h-screen overflow-hidden">
               <Header count={count} clicksPerSecond={clicksPerSecond} />
               <img
-                onClick={() => setCount(count + 1)}
+                onClick={() => setCount(count + clickMultiplier)}
                 src={doorbell}
                 alt="Doorbell"
                 className="h-104 w-auto absolute mt-36 ml-30 cursor-pointer"
@@ -80,7 +99,7 @@ function App() {
               <Objective title="Objetivo final" content="Timbra 1000000 de veces!!" />
               <div className="flex ml-auto w-[55%] menu_shadow h-full">
                 <div className="flex flex-col gap-12 w-4/6 ml-auto mr-20 mt-10">
-                  <Upgrades />
+                  <Upgrades count={count} upgrades={upgrades} />
                   <Shop calculateClicksPerSecond={calculateClicksPerSecond} />
                 </div>
               </div>
