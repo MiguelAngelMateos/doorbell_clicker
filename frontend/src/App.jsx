@@ -21,11 +21,22 @@ function App() {
     return savedCPS ? parseFloat(savedCPS) : 0;
   });
 
+  // Guardar el estado de los contadores de los ShopItems
+  const [shopItemCounts, setShopItemCounts] = useState(() => {
+    const savedCounts = localStorage.getItem('shopItemCounts');
+    return savedCounts ? JSON.parse(savedCounts) : { kid: 0, stick: 0, gum: 0, roboticarm: 0 };
+  });
+
   // Recibe las compras de la tienda y aunmenta el contador de timbres por segundo
-  const calculateClicksPerSecond = (addValue, cost) => {
+  const calculateClicksPerSecond = (addValue, cost, item) => {
     if (cost <= localStorage.getItem('count')) {
       setClicksPerSecond(clicksPerSecond + addValue);
       setCount(count - cost);
+      setShopItemCounts(prevCounts => {
+        const newCounts = { ...prevCounts, [item]: prevCounts[item] + 1 };
+        localStorage.setItem('shopItemCounts', JSON.stringify(newCounts));
+        return newCounts;
+      });
     }
   };
 
@@ -38,6 +49,11 @@ function App() {
   useEffect(() => {
     localStorage.setItem('clicksPerSecond', clicksPerSecond);
   }, [clicksPerSecond]);
+
+  // Actualiza el contador de timbres
+  useEffect(() => {
+    localStorage.setItem('shopItemCounts', JSON.stringify(shopItemCounts));
+  }, [shopItemCounts]);
 
   // Actualiza automaticamente los timbres totales cada 0.10 segundos segun los timbres por segundo
   useEffect(() => {
@@ -54,6 +70,7 @@ function App() {
       if (event.key === 'r' || event.key === 'R') {
         setCount(0);
         setClicksPerSecond(0);
+        setShopItemCounts({ kid: 0, stick: 0, gum: 0, roboticarm: 0 });
       }
     };
     window.addEventListener('keydown', handleKeyPress);
@@ -81,7 +98,7 @@ function App() {
               <div className="flex ml-auto w-[55%] menu_shadow h-full">
                 <div className="flex flex-col gap-12 w-4/6 ml-auto mr-20 mt-10">
                   <Upgrades />
-                  <Shop calculateClicksPerSecond={calculateClicksPerSecond} />
+                  <Shop calculateClicksPerSecond={calculateClicksPerSecond} shopItemCounts={shopItemCounts} />
                 </div>
               </div>
             </div>
