@@ -5,7 +5,7 @@ import gum from '../assets/icons/gum.png';
 import roboticarm from '../assets/icons/roboticarm.png';
 import ShopItem from './ShopItem';
 
-function Shop({ calculateClicksPerSecond }) {
+function Shop({ calculateClicksPerSecond, shopItemCounts }) {
     const [multiplier, setMultiplier] = useState(1); // Estado para el multiplicador
 
     return (
@@ -35,17 +35,17 @@ function Shop({ calculateClicksPerSecond }) {
             </div>
 
             <ul className='flex flex-col gap-2'>
-                <li onClick={() => calculateClicksPerSecond(0.5 * multiplier, 100 * multiplier)}>
-                    <ShopItem name="Niño travieso" price={100 * multiplier} image={kid} />
+                <li onClick={() => calculateClicksPerSecond(0.5 * multiplier, 100 * multiplier, 'kid')}>
+                    <ShopItem name="Niño travieso" price={100 * multiplier} image={kid} itemCount={shopItemCounts.kid} />
                 </li>
-                <li onClick={() => calculateClicksPerSecond(1.5 * multiplier, 1000 * multiplier)}>
-                    <ShopItem name="Palillo" price={1000 * multiplier} image={stick} />
+                <li onClick={() => calculateClicksPerSecond(1.5 * multiplier, 1000 * multiplier, 'stick')}>
+                    <ShopItem name="Palillo" price={1000 * multiplier} image={stick} itemCount={shopItemCounts.stick} />
                 </li>
-                <li onClick={() => calculateClicksPerSecond(5.0 * multiplier, 2000 * multiplier)}>
-                    <ShopItem name="Chicle" price={2000 * multiplier} image={gum} />
+                <li onClick={() => calculateClicksPerSecond(5.0 * multiplier, 2000 * multiplier, 'gum')}>
+                    <ShopItem name="Chicle" price={2000 * multiplier} image={gum} itemCount={shopItemCounts.gum} />
                 </li>
-                <li onClick={() => calculateClicksPerSecond(25.0 * multiplier, 10000 * multiplier)}>
-                    <ShopItem name="Robot" price={10000 * multiplier} image={roboticarm} />
+                <li onClick={() => calculateClicksPerSecond(25.0 * multiplier, 10000 * multiplier, 'roboticarm')}>
+                    <ShopItem name="Robot" price={10000 * multiplier} image={roboticarm} itemCount={shopItemCounts.roboticarm} />
                 </li>
             </ul>
         </div>
