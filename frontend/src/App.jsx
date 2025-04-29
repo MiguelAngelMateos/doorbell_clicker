@@ -121,19 +121,28 @@ function App() {
         <Route
           path="/"
           element={
-            <div className="h-screen overflow-hidden">
-              <Header count={count} clicksPerSecond={clicksPerSecond} />
+            <div className=" relative h-screen overflow-hidden">
               <img
-                onClick={() => setCount(count + clickMultiplier)}
-                src={doorbell}
-                alt="Doorbell"
-                className="h-104 w-auto absolute mt-36 ml-30 cursor-pointer"
+                src="/images/wallpaper.png"
+                alt="Fondo"
+                className="absolute top-0 left-0 w-full h-full object-cover z-[-1]"
               />
-              <Objective title="Objetivo final" content="Timbra 1000000 de veces!!" />
-              <div className="flex ml-auto w-[55%] menu_shadow h-full">
-                <div className="flex flex-col gap-12 w-4/6 ml-auto mr-20 mt-10">
-                  <Upgrades count={count} upgrades={upgrades} />
-                  <Shop calculateClicksPerSecond={calculateClicksPerSecond} shopItemCounts={shopItemCounts} />
+              <div className=''>
+                <Header count={count} clicksPerSecond={clicksPerSecond} />
+                <img
+                  onClick={() => setCount(count + clickMultiplier)}
+                  src={doorbell}
+                  alt="Doorbell"
+                  className="absolute left-[16%] top-[52%] transform -translate-x-1/2 -translate-y-1/2 w-[20%] cursor-pointer"
+                />
+                <div className='absolute left-[22%] top-[15%] transform -translate-x-1/2 -translate-y-1/2 w-[1000px]'>
+                  <Objective title="Objetivo final" content="Timbra 1000000 de veces!!" />
+                </div>
+                <div className="flex ml-auto w-[55%] menu_shadow h-[5000px]">
+                  <div className="flex flex-col gap-12 w-4/6 ml-auto mr-20 mt-10">
+                    <Upgrades count={count} upgrades={upgrades} />
+                    <Shop calculateClicksPerSecond={calculateClicksPerSecond} shopItemCounts={shopItemCounts} />
+                  </div>
                 </div>
               </div>
             </div>

@@ -1,13 +1,12 @@
 @import "tailwindcss";
 
 body {
-  background-image: url("/images/wallpaper.png");
-  background-size: cover; 
-  background-position: center -70px;
   font-family: 'Secret Thief', sans-serif;
   color: white;
-  max-height: 100vh;
+  min-height: 100vh;
+  margin: 0;
 }
+
 
 @font-face {
   font-family: 'Secret Thief';
