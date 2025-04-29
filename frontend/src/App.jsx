@@ -176,24 +176,32 @@ function App() {
 
   // Manejar el clic en la campana
   const handleClick = (event) => {
-    // Actualizar el contador
-    setCount((prevCount) => prevCount + clickMultiplier);
-
-    // Obtener la posición del clic
     const { clientX, clientY } = event;
-
-    // Mostrar el número flotante
-    setFloatingNumber({
-      value: `+${clickMultiplier}`,
-      x: clientX,
-      y: clientY,
-    });
-
-    // Eliminar el número flotante después de 1 segundo
+  
+    const newId = Date.now(); // ID único para cada número
+  
+    setFloatingNumbers(prev => [
+      ...prev,
+      {
+        id: newId,
+        value: `+${clickMultiplier}`,
+        x: clientX,
+        y: clientY,
+      },
+    ]);
+  
+    // Eliminarlo después de 1 segundo
     setTimeout(() => {
-      setFloatingNumber(null);
+      setFloatingNumbers(prev => prev.filter(n => n.id !== newId));
     }, 1000);
+  
+    // Actualizar contador
+    setCount(prev => prev + clickMultiplier);
   };
+
+  
+  const [floatingNumbers, setFloatingNumbers] = useState([]);
+
 
   return (
     <Router>
@@ -212,23 +220,24 @@ function App() {
                 <Header count={count} clicksPerSecond={clicksPerSecond} />
                 <img
                   onClick={handleClick}
+                  draggable="false"
                   src={doorbell}
                   alt="Doorbell"
                   className="absolute left-[16%] top-[52%] transform -translate-x-1/2 -translate-y-1/2 w-[20%] cursor-pointer"
                 />
-                {floatingNumber && (
+                {floatingNumbers.map((num) => (
                   <div
-                    className="absolute text-green-500 text-xl font-bold select-none pointer-events-none"
+                    key={num.id}
+                    className="floating-number text-green-500 text-xl font-bold select-none pointer-events-none"
                     style={{
-                      left: `${floatingNumber.x + 20}px`, // desplaza 20px a la derecha
-                      top: `${floatingNumber.y}px`,
-                      transform: 'translate(-50%, -50%)',
-                      animation: 'floatUp 1s ease-out',
+                      position: 'absolute',
+                      left: num.x + 5,
+                      top: num.y - 20,
                     }}
                   >
-                    {floatingNumber.value}
-                </div>
-              )}
+                    {num.value}
+                  </div>
+                ))}
                 <div className='fixed top-[10vh] left-[-50px] z-10 w-[1000px]'>
                   <Objective title="Objetivo final" content="Timbra 1000000 de veces!!" />
                 </div>

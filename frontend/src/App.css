@@ -1,1 +1,17 @@
 @import "tailwindcss";
+
+.floating-number {
+    animation: floatUpFade 1s ease-out forwards;
+  }
+  
+  @keyframes floatUpFade {
+    0% {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    100% {
+      opacity: 0;
+      transform: translateY(-40px);
+    }
+  }
+  
