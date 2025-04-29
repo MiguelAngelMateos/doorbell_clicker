@@ -83,57 +83,129 @@ function Upgrades({ count, upgrades }) {
         <div className="flex w-full flex-col">
             <div className="flex justify-between w-full">
                 <h2 className="bubble-text text-6xl">Mejoras</h2>
-                <span className="mt-auto">Siguiente mejora: {count.toFixed(0)}/{nextUpgrade}</span>
+                <span className="mt-auto">
+                {nextUpgrade === "No hay más mejoras"
+                    ? nextUpgrade
+                    : `Siguiente mejora: ${count.toFixed(0)}/${nextUpgrade}`}
+                </span>
             </div>
             <div className="flex mt-4 justify-between">
-                <div
+                {/* Mejora 1 */}
+                <div className='relative group w-fit'>
+                    <div
                     className={`button_upgrades w-26 h-26 ${
                         hasUpgraded[0] ? '' : 'button_upgrades_unlocked'
                     }`}
-                >
+                    >
                     <img
                         src={hasUpgraded[0] ? upgrade1 : incognite}
                         className="button_top_upgrades w-full h-full object-contain"
-                    ></img>
+                        alt="Mejora 1"
+                    />
+                    </div>
+                    {/* Tooltip Mejora 1 */}
+                    {hasUpgraded[0] && (
+                    <div className='absolute left-1/2 transform -translate-x-1/2 mt-4 w-[280px] p-2 text-sm text-gray-700 bg-white border border-gray-300 rounded-md shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-opacity duration-200 z-10'>
+                        <p className='font-bold text-lg'>Mejora 1: Doble Click</p>
+                        <p>Descubres un bug en el timbre.</p>
+                        <p>Cada clic del ratón suma el doble de timbres.</p>
+                    </div>
+                    )}
                 </div>
-                <div
+
+                {/* Mejora 2 */}
+                <div className='relative group w-fit'>
+                    <div
                     className={`button_upgrades w-26 h-26 ${
                         hasUpgraded[1] ? '' : 'button_upgrades_unlocked'
                     }`}
-                >  
+                    >
                     <img
                         src={hasUpgraded[1] ? upgrade2 : incognite}
                         className="button_top_upgrades w-full h-full object-contain"
-                    ></img>
+                        alt="Mejora 2"
+                    />
+                    </div>
+                    {/* Tooltip Mejora 2 */}
+                    {hasUpgraded[1] && (
+                    <div className='absolute left-1/2 transform -translate-x-1/2 mt-4 w-[280px] p-2 text-sm text-gray-700 bg-white border border-gray-300 rounded-md shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-opacity duration-200 z-10'>
+                        <p className='font-bold text-lg'>Mejora 2: Producción a tope</p>
+                        <p>Dejas todo de lado y dedicas tu vida a mejorar la producción.</p>
+                        <p>Toda la producción de tu tienda genera un 20% mas de timbres</p>
+                    </div>
+                    )}
                 </div>
-                <div className={`button_upgrades w-26 h-26 ${
+
+                {/* Mejora 3 */}
+                <div className='relative group w-fit'>
+                    <div
+                    className={`button_upgrades w-26 h-26 ${
                         hasUpgraded[2] ? '' : 'button_upgrades_unlocked'
                     }`}
-                >
+                    >
                     <img
                         src={hasUpgraded[2] ? upgrade3 : incognite}
                         className="button_top_upgrades w-full h-full object-contain"
-                    ></img>
+                        alt="Mejora 3"
+                    />
+                    </div>
+                    {/* Tooltip Mejora 3 */}
+                    {hasUpgraded[2] && (
+                    <div className='absolute left-1/2 transform -translate-x-1/2 mt-4 w-[280px] p-2 text-sm text-gray-700 bg-white border border-gray-300 rounded-md shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-opacity duration-200 z-10'>
+                        <p className='font-bold text-lg'>Mejora 3: Segundos de gloria</p>
+                        <p>Tienes momentos de euforia donde exprimes al maximo la capacidad del timbre.</p>
+                        <p>Una vez por minuto los clicks te otorgan 100 timbres durante 10 segundos.</p>
+                    </div>
+                    )}
                 </div>
-                <div className={`button_upgrades w-26 h-26 ${
+
+                {/* Mejora 4 */}
+                <div className='relative group w-fit'>
+                    <div
+                    className={`button_upgrades w-26 h-26 ${
                         hasUpgraded[3] ? '' : 'button_upgrades_unlocked'
                     }`}
-                >
+                    >
                     <img
                         src={hasUpgraded[3] ? upgrade4 : incognite}
                         className="button_top_upgrades w-full h-full object-contain"
-                    ></img>
+                        alt="Mejora 4"
+                    />
+                    </div>
+                    {/* Tooltip Mejora 4 */}
+                    {hasUpgraded[3] && (
+                    <div className='absolute left-1/2 transform -translate-x-1/2 mt-4 w-[280px] p-2 text-sm text-gray-700 bg-white border border-gray-300 rounded-md shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-opacity duration-200 z-10'>
+                        <p className='font-bold text-lg'>Mejora 4: Golpe de suerte</p>
+                        <p>Compras un billete de loteria y te toca el premio gordo!</p>
+                        <p>Añade 100 Brazos roboticos a tu tienda</p>
+                    </div>
+                    )}
                 </div>
-                <div className={`button_upgrades w-26 h-26 ${
+
+                {/* Mejora 5 */}
+                <div className='relative group w-fit'>
+                    <div
+                    className={`button_upgrades w-26 h-26 ${
                         hasUpgraded[4] ? '' : 'button_upgrades_unlocked'
                     }`}
-                >
+                    >
                     <img
                         src={hasUpgraded[4] ? upgrade5 : incognite}
                         className="button_top_upgrades w-full h-full object-contain"
-                    ></img>
+                        alt="Mejora 5"
+                    />
+                    </div>
+                    {/* Tooltip Mejora 5 */}
+                    {hasUpgraded[4] && (
+                    <div className='absolute left-1/2 transform -translate-x-1/2 mt-4 w-[280px] p-2 text-sm text-gray-700 bg-white border border-gray-300 rounded-md shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-opacity duration-200 z-10'>
+                        <p className='font-bold text-lg'>Mejora 5: Acción divina</p>
+                        <p>Jesucrito baja del cielo y te vendice con una mejora divina.</p>
+                        <p>Toda tu producción se multiplica x10</p>
+                    </div>
+                    )}
                 </div>
-            </div>
+                </div>
+
         </div>
     );
 }

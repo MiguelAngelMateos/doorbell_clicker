@@ -161,7 +161,7 @@ function App() {
         setShopItemCounts({ kid: 0, stick: 0, gum: 0, roboticarm: 0 });
       }
       if (event.key === 't' || event.key === 'T') {
-        setClicksPerSecond(prev => prev + 1);
+        setClicksPerSecond(prev => prev + 1000);
       }
       if (event.key === 'w' || event.key === 'W') {
         setCount(prev => prev + 1000000);
