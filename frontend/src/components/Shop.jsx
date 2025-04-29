@@ -33,21 +33,22 @@ function Shop({ calculateClicksPerSecond, shopItemCounts }) {
                     x100
                 </button>
             </div>
-
-            <ul className='flex flex-col gap-2'>
-                <li onClick={() => calculateClicksPerSecond(0.5 * multiplier, 100 * multiplier, 'kid')}>
-                    <ShopItem name="Niño travieso" price={100 * multiplier} image={kid} itemCount={shopItemCounts.kid} />
-                </li>
-                <li onClick={() => calculateClicksPerSecond(1.5 * multiplier, 1000 * multiplier, 'stick')}>
-                    <ShopItem name="Palillo" price={1000 * multiplier} image={stick} itemCount={shopItemCounts.stick} />
-                </li>
-                <li onClick={() => calculateClicksPerSecond(5.0 * multiplier, 2000 * multiplier, 'gum')}>
-                    <ShopItem name="Chicle" price={2000 * multiplier} image={gum} itemCount={shopItemCounts.gum} />
-                </li>
-                <li onClick={() => calculateClicksPerSecond(25.0 * multiplier, 10000 * multiplier, 'roboticarm')}>
-                    <ShopItem name="Robot" price={10000 * multiplier} image={roboticarm} itemCount={shopItemCounts.roboticarm} />
-                </li>
-            </ul>
+            <div className="h-[200px] 2xl:h-[460px] overflow-y-auto p-2">
+                <ul className='flex flex-col gap-2'>
+                    <li onClick={() => calculateClicksPerSecond(0.5 * multiplier, 100 * multiplier, 'kid')}>
+                        <ShopItem name="Niño travieso" price={100 * multiplier} image={kid} itemCount={shopItemCounts.kid} />
+                    </li>
+                    <li onClick={() => calculateClicksPerSecond(1.5 * multiplier, 1000 * multiplier, 'stick')}>
+                        <ShopItem name="Palillo" price={1000 * multiplier} image={stick} itemCount={shopItemCounts.stick} />
+                    </li>
+                    <li onClick={() => calculateClicksPerSecond(5.0 * multiplier, 2000 * multiplier, 'gum')}>
+                        <ShopItem name="Chicle" price={2000 * multiplier} image={gum} itemCount={shopItemCounts.gum} />
+                    </li>
+                    <li onClick={() => calculateClicksPerSecond(25.0 * multiplier, 10000 * multiplier, 'roboticarm')}>
+                        <ShopItem name="Robot" price={10000 * multiplier} image={roboticarm} itemCount={shopItemCounts.roboticarm} />
+                    </li>
+                </ul>
+            </div>
         </div>
     );
 }
