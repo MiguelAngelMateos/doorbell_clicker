@@ -1,5 +1,9 @@
 import { useEffect, useState } from 'react';
 import upgrade1 from '../assets/icons/upgrade1.png';
+import upgrade2 from '../assets/icons/upgrade2.png';
+import upgrade3 from '../assets/icons/upgrade3.png';
+import upgrade4 from '../assets/icons/upgrade4.png';
+import upgrade5 from '../assets/icons/upgrade5.png';
 import incognite from '../assets/icons/incognite.png';
 
 function Upgrades({ count, upgrades }) {
@@ -98,7 +102,7 @@ function Upgrades({ count, upgrades }) {
                     }`}
                 >  
                     <img
-                        src={hasUpgraded[1] ? upgrade1 : incognite}
+                        src={hasUpgraded[1] ? upgrade2 : incognite}
                         className="button_top_upgrades w-full h-full object-contain"
                     ></img>
                 </div>
@@ -107,7 +111,7 @@ function Upgrades({ count, upgrades }) {
                     }`}
                 >
                     <img
-                        src={hasUpgraded[2] ? upgrade1 : incognite}
+                        src={hasUpgraded[2] ? upgrade3 : incognite}
                         className="button_top_upgrades w-full h-full object-contain"
                     ></img>
                 </div>
@@ -116,7 +120,7 @@ function Upgrades({ count, upgrades }) {
                     }`}
                 >
                     <img
-                        src={hasUpgraded[3] ? upgrade1 : incognite}
+                        src={hasUpgraded[3] ? upgrade4 : incognite}
                         className="button_top_upgrades w-full h-full object-contain"
                     ></img>
                 </div>
@@ -125,7 +129,7 @@ function Upgrades({ count, upgrades }) {
                     }`}
                 >
                     <img
-                        src={hasUpgraded[4] ? upgrade1 : incognite}
+                        src={hasUpgraded[4] ? upgrade5 : incognite}
                         className="button_top_upgrades w-full h-full object-contain"
                     ></img>
                 </div>
