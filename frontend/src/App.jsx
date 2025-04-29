@@ -83,13 +83,29 @@ function App() {
     return () => clearInterval(interval);
   }, [clicksPerSecond]);
 
-  // Reinicia la partida al clickar la tecla R
+  // Win condition
+  useEffect(() => {
+    if (count >= 1000000) {
+      alert("¡Has ganado!");
+      setCount(0);
+      setClicksPerSecond(0);
+      setShopItemCounts({ kid: 0, stick: 0, gum: 0, roboticarm: 0 });
+    }
+  }, [count]);
+
+  // Trucos de desarrollador
   useEffect(() => {
     const handleKeyPress = (event) => {
       if (event.key === 'r' || event.key === 'R') {
         setCount(0);
         setClicksPerSecond(0);
         setShopItemCounts({ kid: 0, stick: 0, gum: 0, roboticarm: 0 });
+      }
+      if (event.key === 't' || event.key === 'T') {
+        setClicksPerSecond(prev => prev + 1);
+      }
+      if (event.key === 'w' || event.key === 'W') {
+        setCount(prev => prev + 1000000);
       }
     };
     window.addEventListener('keydown', handleKeyPress);
