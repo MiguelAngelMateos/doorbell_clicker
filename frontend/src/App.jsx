@@ -26,12 +26,13 @@ function App() {
   });
 
   // Recibe las compras de la tienda y aumenta el contador de timbres por segundo
-  const calculateClicksPerSecond = (addValue, cost, item) => {
+  const calculateClicksPerSecond = (addValue, cost, item, multiplier) => {
+    console.log(cost)
     if (cost <= localStorage.getItem('count')) {
       setClicksPerSecond(clicksPerSecond + addValue);
       setCount(count - cost);
       setShopItemCounts(prevCounts => {
-        const newCounts = { ...prevCounts, [item]: prevCounts[item] + 1 };
+        const newCounts = { ...prevCounts, [item]: prevCounts[item] + multiplier };
         localStorage.setItem('shopItemCounts', JSON.stringify(newCounts));
         return newCounts;
       });
@@ -171,8 +172,6 @@ function App() {
       window.removeEventListener('keydown', handleKeyPress);
     };
   }, []);
-
-  const [floatingNumber, setFloatingNumber] = useState(null); // Estado para el número flotante
 
   // Manejar el clic en la campana
   const handleClick = (event) => {
