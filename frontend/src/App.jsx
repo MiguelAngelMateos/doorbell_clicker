@@ -45,57 +45,65 @@ function App() {
   const [isProductionBoostActive, setIsProductionBoostActive] = useState(false); // Nuevo estado
 
   const upgrades = (upgradeId) => {
-    console.log('entra')
+    // Obtener mejoras aplicadas del localStorage o usar array vacío
+    const appliedUpgrades = JSON.parse(localStorage.getItem('appliedUpgrades') || '[]');
+  
+    // Si ya se aplicó esta mejora, salir
+    if (appliedUpgrades.includes(upgradeId)) {
+      console.log(`Mejora ${upgradeId} ya aplicada`);
+      return;
+    }
+  
+    // Añadir mejora a la lista y guardarla
+    const newAppliedUpgrades = [...appliedUpgrades, upgradeId];
+    localStorage.setItem('appliedUpgrades', JSON.stringify(newAppliedUpgrades));
+  
+    // Ejecutar la mejora
     if (upgradeId === 1) {
-      console.log("Mejora 1: Cada click suma 2")
+      console.log("Mejora 1: Cada click suma 2");
       setClickMultiplier(2);
-    }else if (upgradeId === 2){
-      console.log("Mejora 2: La producción total aumenta un 20%")
-      setIsProductionBoostActive(true); // Activar la mejora    
-    }else if (upgradeId === 3){
-      console.log("Mejora 3: Por cada minuto que pasa, hay 10 segundos donde tus clicks suman 100");
-    
-      // Activar el buff inmediatamente
+  
+    } else if (upgradeId === 2) {
+      console.log("Mejora 2: La producción total aumenta un 20%");
+      setIsProductionBoostActive(true);
+  
+    } else if (upgradeId === 3) {
+      console.log("Mejora 3: Buff de 10 segundos cada minuto");
+  
       setClickMultiplier(100);
       setIsBuffActive(true);
-    
-      // Cortar el buff inicial después de 10 segundos
+  
       setTimeout(() => {
         setClickMultiplier(2);
         setIsBuffActive(false);
       }, 10000);
-    
-      // Iniciar un intervalo que se repite cada 60s
+  
       const buffInterval = setInterval(() => {
-        // Activar buff
         setClickMultiplier(100);
         setIsBuffActive(true);
-    
-        // Cortar buff después de 10s
+  
         setTimeout(() => {
           setClickMultiplier(1);
           setIsBuffActive(false);
         }, 10000);
-    
+  
       }, 60000);
-    
-      // Devolver función de limpieza si estás en un useEffect
+  
       return () => clearInterval(buffInterval);
-    }else if (upgradeId === 4){
+  
+    } else if (upgradeId === 4) {
       console.log("Mejora 4: Te regalan 100 máquinas picadoras");
-    
+  
       const roboticArmBoost = 100;
-      const cpsPerRoboticArm = 5; // Ajusta según cuánto aporte cada uno
+      const cpsPerRoboticArm = 5;
       const totalAddedCPS = roboticArmBoost * cpsPerRoboticArm;
-    
-      // Actualizar clicks por segundo
+  
       setClicksPerSecond(prev => {
         const updated = prev + totalAddedCPS;
         localStorage.setItem('clicksPerSecond', updated);
         return updated;
       });
-    
-      // Actualizar cantidad de roboticarms
+  
       setShopItemCounts(prevCounts => {
         const updatedCounts = {
           ...prevCounts,
@@ -104,11 +112,17 @@ function App() {
         localStorage.setItem('shopItemCounts', JSON.stringify(updatedCounts));
         return updatedCounts;
       });
-    }else if (upgradeId === 5){
-      console.log("Mejora 5: Toda la producción se multiplica por 10")
-      setClicksPerSecond(prev => prev * 10);
+  
+    } else if (upgradeId === 5) {
+      console.log("Mejora 5: Toda la producción se multiplica por 10");
+      setClicksPerSecond(prev => {
+        const updated = prev * 10;
+        localStorage.setItem('clicksPerSecond', updated);
+        return updated;
+      });
     }
-  }
+  };
+  
 
 
   // Actualiza el contador de timbres
