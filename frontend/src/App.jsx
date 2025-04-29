@@ -141,7 +141,17 @@ function App() {
     return () => clearInterval(interval);
   }, [clicksPerSecond, isProductionBoostActive]);
 
-  // Reinicia la partida al clickar la tecla R
+  // Win condition
+  useEffect(() => {
+    if (count >= 1000000) {
+      alert("¡Has ganado!");
+      setCount(0);
+      setClicksPerSecond(0);
+      setShopItemCounts({ kid: 0, stick: 0, gum: 0, roboticarm: 0 });
+    }
+  }, [count]);
+
+  // Trucos de desarrollador
   useEffect(() => {
     const handleKeyPress = (event) => {
       if (event.key === 'r' || event.key === 'R') {
@@ -150,7 +160,10 @@ function App() {
         setShopItemCounts({ kid: 0, stick: 0, gum: 0, roboticarm: 0 });
       }
       if (event.key === 't' || event.key === 'T') {
-        setClicksPerSecond(prev => prev + 100);
+        setClicksPerSecond(prev => prev + 1);
+      }
+      if (event.key === 'w' || event.key === 'W') {
+        setCount(prev => prev + 1000000);
       }
     };
     window.addEventListener('keydown', handleKeyPress);
@@ -189,32 +202,41 @@ function App() {
         <Route
           path="/"
           element={
-            <div className="h-screen overflow-hidden">
-              <Header count={count} clicksPerSecond={clicksPerSecond} />
+            <div className="relative h-screen overflow-hidden">
               <img
-                onClick={handleClick}
-                src={doorbell}
-                alt="Doorbell"
-                className="h-104 w-auto absolute mt-36 ml-30 cursor-pointer"
+                src="/images/wallpaper.png"
+                alt="Fondo"
+                className="absolute top-0 left-0 w-full h-full object-cover z-[-1]"
               />
-              {floatingNumber && (
-                <div
-                  className="absolute text-green-500 text-xl font-bold select-none pointer-events-none"
-                  style={{
-                    left: `${floatingNumber.x + 20}px`, // desplaza 20px a la derecha
-                    top: `${floatingNumber.y}px`,
-                    transform: 'translate(-50%, -50%)',
-                    animation: 'floatUp 1s ease-out',
-                  }}
-                >
-                  {floatingNumber.value}
+              <div className=''>
+                <Header count={count} clicksPerSecond={clicksPerSecond} />
+                <img
+                  onClick={handleClick}
+                  src={doorbell}
+                  alt="Doorbell"
+                  className="absolute left-[16%] top-[52%] transform -translate-x-1/2 -translate-y-1/2 w-[20%] cursor-pointer"
+                />
+                {floatingNumber && (
+                  <div
+                    className="absolute text-green-500 text-xl font-bold select-none pointer-events-none"
+                    style={{
+                      left: `${floatingNumber.x + 20}px`, // desplaza 20px a la derecha
+                      top: `${floatingNumber.y}px`,
+                      transform: 'translate(-50%, -50%)',
+                      animation: 'floatUp 1s ease-out',
+                    }}
+                  >
+                    {floatingNumber.value}
                 </div>
               )}
-              <Objective title="Objetivo final" content="Timbra 1000000 de veces!!" />
-              <div className="flex ml-auto w-[55%] menu_shadow h-full">
-                <div className="flex flex-col gap-12 w-4/6 ml-auto mr-20 mt-10">
-                  <Upgrades count={count} upgrades={upgrades} />
-                  <Shop calculateClicksPerSecond={calculateClicksPerSecond} shopItemCounts={shopItemCounts} />
+                <div className='fixed top-[10vh] left-[-50px] z-10 w-[1000px]'>
+                  <Objective title="Objetivo final" content="Timbra 1000000 de veces!!" />
+                </div>
+                <div className="flex ml-auto w-[55%] menu_shadow h-screen">
+                  <div className="flex flex-col gap-12 w-4/6 ml-auto mr-20 mt-10">
+                    <Upgrades count={count} upgrades={upgrades} />
+                    <Shop calculateClicksPerSecond={calculateClicksPerSecond} shopItemCounts={shopItemCounts} />
+                  </div>
                 </div>
               </div>
             </div>
