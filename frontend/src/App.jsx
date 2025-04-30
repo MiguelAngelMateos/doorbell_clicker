@@ -92,10 +92,10 @@ function App() {
       return () => clearInterval(buffInterval);
   
     } else if (upgradeId === 4) {
-      console.log("Mejora 4: Te regalan 100 máquinas picadoras");
+      console.log("Mejora 4: Te regalan 10 máquinas picadoras");
   
-      const roboticArmBoost = 100;
-      const cpsPerRoboticArm = 5;
+      const roboticArmBoost = 10;
+      const cpsPerRoboticArm = 250;
       const totalAddedCPS = roboticArmBoost * cpsPerRoboticArm;
   
       setClicksPerSecond(prev => {
@@ -158,7 +158,7 @@ function App() {
 
   // Win condition
   useEffect(() => {
-    if (count >= 1000000) {
+    if (count >= 100000000) {
       alert("¡Has ganado!");
       setCount(0);
       setClicksPerSecond(0);
@@ -173,6 +173,7 @@ function App() {
         setCount(0);
         setClicksPerSecond(0);
         setShopItemCounts({ kid: 0, stick: 0, gum: 0, roboticarm: 0 });
+        localStorage.setItem('appliedUpgrades', JSON.stringify([]));
       }
       if (event.key === 't' || event.key === 'T') {
         setClicksPerSecond(prev => prev + 1000);
@@ -252,7 +253,7 @@ function App() {
                   </div>
                 ))}
                 <div className='fixed top-[10vh] left-[-50px] z-10 w-[1000px]'>
-                  <Objective title="Objetivo final" content="Timbra 1000000 de veces!!" />
+                  <Objective title="Objetivo final" content="Timbra 100 millones de veces!!" />
                 </div>
                 <div className="flex ml-auto w-[55%] menu_shadow h-screen">
                   <div className="flex flex-col gap-12 w-4/6 ml-auto mr-20 mt-10">

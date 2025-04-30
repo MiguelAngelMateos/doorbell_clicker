@@ -19,7 +19,7 @@ function Header({ count, clicksPerSecond }) {
                 </div>
                 <div className='ml-40'>
                     <h1 className="text-5xl bubble-text">{count.toFixed(0)} timbres</h1>
-                    <span className="text-2xl">Timbres por segundo: {clicksPerSecond.toFixed(2)}</span>
+                    <span className="text-2xl">Timbres por segundo: {clicksPerSecond.toFixed(0)}</span>
                 </div>
             </div>
             <div className="flex mr-20 gap-18 text-2xl">
