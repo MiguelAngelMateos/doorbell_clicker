@@ -45,18 +45,7 @@ function App() {
   const [isProductionBoostActive, setIsProductionBoostActive] = useState(false); // Nuevo estado
 
   const upgrades = (upgradeId) => {
-    // Obtener mejoras aplicadas del localStorage o usar array vacío
-    const appliedUpgrades = JSON.parse(localStorage.getItem('appliedUpgrades') || '[]');
-  
-    // Si ya se aplicó esta mejora, salir
-    if (appliedUpgrades.includes(upgradeId)) {
-      console.log(`Mejora ${upgradeId} ya aplicada`);
-      return;
-    }
-  
-    // Añadir mejora a la lista y guardarla
-    const newAppliedUpgrades = [...appliedUpgrades, upgradeId];
-    localStorage.setItem('appliedUpgrades', JSON.stringify(newAppliedUpgrades));
+    
   
     // Ejecutar la mejora
     if (upgradeId === 1) {
@@ -157,9 +146,11 @@ function App() {
   }, [clicksPerSecond, isProductionBoostActive]);
 
   // Win condition
+  const [hasWon, setHasWon] = useState(false);
+
   useEffect(() => {
-    if (count >= 100000000) {
-      alert("¡Has ganado!");
+    if (count >= 100000000 && !hasWon) {
+      setHasWon(true);
       setCount(0);
       setClicksPerSecond(0);
       setShopItemCounts({ kid: 0, stick: 0, gum: 0, roboticarm: 0 });
@@ -253,7 +244,11 @@ function App() {
                   </div>
                 ))}
                 <div className='fixed top-[10vh] left-[-50px] z-10 w-[1000px]'>
-                  <Objective title="Objetivo final" content="Timbra 100 millones de veces!!" />
+                  {hasWon ? (
+                      <Objective title="¡Has ganado!" content="Has alcanzado 1.000.000 de timbres." className="hasWon"/>
+                  ) : (
+                    <Objective title="Objetivo final" content="Timbra 1000000 de veces!!" />
+                  )}
                 </div>
                 <div className="flex ml-auto w-[55%] menu_shadow h-screen">
                   <div className="flex flex-col gap-12 w-4/6 ml-auto mr-20 mt-10">
