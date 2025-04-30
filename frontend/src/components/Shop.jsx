@@ -16,19 +16,19 @@ function Shop({ calculateClicksPerSecond, shopItemCounts }) {
             <div className="flex gap-4 mb-4">
                 <button
                     onClick={() => setMultiplier(1)}
-                    className={`px-4 py-2 ${multiplier === 1 ? 'text-white bg-gray-700' : 'text-gray-400 bg-gray-300'}`}
+                    className={`px-4 py-2 text-white cursor-pointer ${multiplier === 1 ? 'text-bold text-2xl' : 'opacity-80 text-semibold text-xl'}`}
                 >
                     x1
                 </button>
                 <button
                     onClick={() => setMultiplier(10)}
-                    className={`px-4 py-2 ${multiplier === 10 ? 'text-white bg-gray-700' : 'text-gray-400 bg-gray-300'}`}
+                    className={`px-4 py-2 text-white cursor-pointer ${multiplier === 10 ? 'text-white text-bold text-2xl' : 'opacity-80 text-white text-semibold text-xl'}`}
                 >
                     x10
                 </button>
                 <button
                     onClick={() => setMultiplier(100)}
-                    className={`px-4 py-2 ${multiplier === 100 ? 'text-white bg-gray-700' : 'text-gray-400 bg-gray-300'}`}
+                    className={`px-4 py-2 text-white cursor-pointer ${multiplier === 100 ? 'text-white text-bold text-2xl' : 'opacity-80 text-white text-semibold text-xl'}`}
                 >
                     x100
                 </button>
