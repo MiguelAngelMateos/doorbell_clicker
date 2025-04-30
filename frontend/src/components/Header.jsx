@@ -24,7 +24,7 @@ function Header({ count, clicksPerSecond }) {
             </div>
             <div className="flex mr-20 gap-18 text-2xl">
                 <Link to="/Leaderboard">Clasificación</Link>
-                <button>Iniciar sesión/Registrarte</button>
+                <Link to="/Login">Iniciar sesión/Registrarte</Link>
             </div>
         </header>
     )

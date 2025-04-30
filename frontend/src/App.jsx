@@ -2,6 +2,8 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { useState, useEffect } from 'react'
 import './App.css'
 import Leaderboard from './views/Leaderboard';
+import Login from './views/Login';
+import Register from './views/Register';
 import { Header, Objective, Upgrades, Shop } from './components';
 
 import doorbell from './assets/icons/doorbell.png'
@@ -262,6 +264,8 @@ function App() {
         />
       
         <Route path="/Leaderboard" element={<Leaderboard />} />
+        <Route path="/Login" element={<Login />}></Route>
+        <Route path="/Register" element={<Register />}></Route>
       </Routes>
     </Router>
   );

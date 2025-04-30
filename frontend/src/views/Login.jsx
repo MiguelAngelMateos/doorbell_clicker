@@ -1,0 +1,99 @@
+import { useState } from "react";
+import { Link, useNavigate } from 'react-router-dom';
+
+function Login() {
+    const [username, setUsername] = useState("");
+    const [password, setPassword] = useState("");
+    const navigate = useNavigate();
+
+    const handleLogin = async (e) => {
+        e.preventDefault();
+        const res = await fetch("http://localhost:3000/api/auth/login", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ username, password })
+        });
+
+        const data = await res.json();
+        
+        if (res.ok) {
+            localStorage.setItem("token", data.token);
+            navigate("/");
+        } else {
+            alert(data);
+        }
+    };
+
+    return (
+        <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-gray-900 to-black py-12 px-4 sm:px-6 lg:px-8">
+            <img
+                src="/images/wallpaper.png"
+                alt="Fondo"
+                className="absolute top-0 left-0 w-full h-full object-cover z-0 opacity-50"
+            />
+            
+            <div className="max-w-md w-full space-y-8 bg-gray-800 bg-opacity-80 p-10 rounded-2xl border-2 border-yellow-400 shadow-2xl relative z-10">
+                <div>
+                <h2 className="mt-6 text-center text-3xl font-extrabold text-white">
+                    Bienvenido
+                </h2>
+                <p className="mt-2 text-center text-sm text-gray-300">
+                    Inicia sesión para clasificar tu partida
+                </p>
+                </div>
+                
+                <form className="mt-8 space-y-6" onSubmit={handleLogin}>
+                <div className="rounded-md shadow-sm space-y-4">
+                    <div>
+                    <label htmlFor="username" className="sr-only">
+                        Nombre de usuario
+                    </label>
+                    <input
+                        id="username"
+                        name="username"
+                        type="text"
+                        required
+                        onChange={(e) => setUsername(e.target.value)}
+                        className="appearance-none relative block w-full px-3 py-3 border border-gray-600 placeholder-gray-400 text-white rounded-lg bg-gray-700 focus:outline-none focus:ring-2 focus:ring-yellow-400 focus:border-transparent"
+                        placeholder="Nombre de usuario"
+                    />
+                    </div>
+                    
+                    <div>
+                    <label htmlFor="password" className="sr-only">
+                        Contraseña
+                    </label>
+                    <input
+                        id="password"
+                        name="password"
+                        type="password"
+                        required
+                        onChange={(e) => setPassword(e.target.value)}
+                        className="appearance-none relative block w-full px-3 py-3 border border-gray-600 placeholder-gray-400 text-white rounded-lg bg-gray-700 focus:outline-none focus:ring-2 focus:ring-yellow-400 focus:border-transparent"
+                        placeholder="Contraseña"
+                    />
+                    </div>
+                </div>
+
+                <div>
+                    <button
+                    type="submit"
+                    className="cursor-pointer group relative w-full flex justify-center py-3 px-4 border border-transparent text-sm font-medium rounded-lg text-black bg-yellow-400 hover:bg-yellow-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-yellow-500 transition-all duration-300 ease-in-out transform hover:-translate-y-1"
+                    >
+                    Iniciar sesión
+                    </button>
+                </div>
+                
+                <div className="text-center mt-4">
+                    <p className="text-sm text-gray-300">
+                        ¿No tienes una cuenta? 
+                        <Link to="/Register" className="font-medium text-yellow-400 hover:text-yellow-300 ml-1">Registrate</Link>
+                    </p>
+                </div>
+                </form>
+            </div>
+        </div>
+    );
+}
+
+export default Login;
