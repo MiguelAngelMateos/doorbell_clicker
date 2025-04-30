@@ -170,7 +170,7 @@ function App() {
         setClicksPerSecond(prev => prev + 1000);
       }
       if (event.key === 'w' || event.key === 'W') {
-        setCount(prev => prev + 1000000);
+        setCount(prev => prev + 100000000);
       }
     };
     window.addEventListener('keydown', handleKeyPress);
@@ -245,9 +245,9 @@ function App() {
                 ))}
                 <div className='fixed top-[10vh] left-[-50px] z-10 w-[1000px]'>
                   {hasWon ? (
-                      <Objective title="¡Has ganado!" content="Has alcanzado 1.000.000 de timbres." className="hasWon"/>
+                      <Objective title="Has ganado!" content="Has alcanzado 100 millones de timbres." className="hasWon" />
                   ) : (
-                    <Objective title="Objetivo final" content="Timbra 1000000 de veces!!" />
+                    <Objective title="Objetivo final" content="Timbra 100 millones de veces!!" />
                   )}
                 </div>
                 <div className="flex ml-auto w-[55%] menu_shadow h-screen">
