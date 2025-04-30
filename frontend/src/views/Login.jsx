@@ -1,9 +1,11 @@
 import { useState } from "react";
 import { Link, useNavigate } from 'react-router-dom';
+import arrow from '../assets/icons/arrow.png';
 
 function Login() {
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
+    const [errorMessage, setErrorMessage] = useState("");
     const navigate = useNavigate();
 
     const handleLogin = async (e) => {
@@ -20,7 +22,7 @@ function Login() {
             localStorage.setItem("token", data.token);
             navigate("/");
         } else {
-            alert(data);
+            setErrorMessage(data.message);
         }
     };
 
@@ -34,12 +36,15 @@ function Login() {
             
             <div className="max-w-md w-full space-y-8 bg-gray-800 bg-opacity-80 p-10 rounded-2xl border-2 border-yellow-400 shadow-2xl relative z-10">
                 <div>
-                <h2 className="mt-6 text-center text-3xl font-extrabold text-white">
-                    Bienvenido
-                </h2>
-                <p className="mt-2 text-center text-sm text-gray-300">
-                    Inicia sesión para clasificar tu partida
-                </p>
+                    <Link to="/" className="absolute top-4 left-10">
+                        <img src={arrow} alt="Flecha para volver" className="w-10 h-10" />
+                    </Link>
+                    <h2 className="mt-6 text-center text-3xl font-extrabold text-white">
+                        Bienvenido
+                    </h2>
+                    <p className="mt-2 text-center text-sm text-gray-300">
+                        Inicia sesión para clasificar tu partida
+                    </p>
                 </div>
                 
                 <form className="mt-8 space-y-6" onSubmit={handleLogin}>
@@ -74,6 +79,10 @@ function Login() {
                     />
                     </div>
                 </div>
+
+                {errorMessage && (
+                    <p className="text-red-500 text-sm text-center mb-4 z-20">{errorMessage}</p>
+                )}
 
                 <div>
                     <button

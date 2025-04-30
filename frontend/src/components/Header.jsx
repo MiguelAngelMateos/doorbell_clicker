@@ -1,7 +1,42 @@
+import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import incognite from '../assets/icons/incognite.png';
 
 function Header({ count, clicksPerSecond }) {
+    const [isAuthenticated, setIsAuthenticated] = useState(false);
+    const [username, setUsername] = useState("");
+
+    useEffect(() => {
+        const token = localStorage.getItem("token");
+
+        if (token) {
+            setIsAuthenticated(true);
+            fetch("http://localhost:3000/api/users/username", {
+                headers: {
+                    Authorization: `${token}`
+                }
+            })
+            .then(res => {
+                if (!res.ok) throw new Error("Token inválido");
+                return res.json();
+            })
+            .then(data => {
+                setUsername(data.username);
+            })
+            .catch(err => {
+                console.error(err);
+                localStorage.removeItem("token");
+                setIsAuthenticated(false);
+            });
+        }
+    }, []);
+
+    const handleLogout = () => {
+        localStorage.removeItem("token");
+        setIsAuthenticated(false);
+        navigate("/Login");
+    };
+    
     return (
         <header className="bg-[#202020] flex flex-row py-4 justify-between items-center">
             <div className="flex flex-row gap-2 text-center ml-16">
@@ -23,8 +58,18 @@ function Header({ count, clicksPerSecond }) {
                 </div>
             </div>
             <div className="flex mr-20 gap-18 text-2xl">
-                <Link to="/Leaderboard">Clasificación</Link>
-                <Link to="/Login">Iniciar sesión/Registrarte</Link>
+                {isAuthenticated ? ( 
+                    <>
+                        <Link to="/Leaderboard">Clasificación</Link>
+                        <p>Usuario: {username}</p>
+                        <button onClick={handleLogout} className="text-red-500 cursor-pointer">Cerrar sesión</button>
+                    </>
+                ) : ( 
+                    <>
+                        <Link to="/Leaderboard">Clasificación</Link>
+                        <Link to="/Login">Iniciar sesión/Registrarte</Link>
+                    </>
+                )}
             </div>
         </header>
     )

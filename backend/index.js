@@ -3,6 +3,7 @@ import mongoose from 'mongoose';
 import cors from 'cors';
 import User from './models/User.js';
 import authRoutes from './routes/auth.js';
+import userRoutes from './routes/users.js';
 import dotenv from 'dotenv';
 
 // Cargar las variables de entorno
@@ -22,6 +23,7 @@ app.get('/', (req, res) => {
 });
 
 app.use("/api/auth", authRoutes);
+app.use("/api/users", userRoutes);
 
 app.listen(PORT, () => {
   console.log(`Servidor backend en http://localhost:${PORT}`);
