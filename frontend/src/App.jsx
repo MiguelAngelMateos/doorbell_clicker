@@ -5,6 +5,9 @@ import Leaderboard from './views/Leaderboard';
 import Login from './views/Login';
 import Register from './views/Register';
 import { Header, Objective, Upgrades, Shop } from './components';
+import click from './assets/sounds/click.mp3';
+import win from './assets/sounds/win.mp3';
+import unlock from './assets/sounds/unlock.mp3';
 
 import doorbell from './assets/icons/doorbell.png'
 
@@ -31,6 +34,7 @@ function App() {
   const calculateClicksPerSecond = (addValue, cost, item, multiplier) => {
     console.log(cost)
     if (cost <= localStorage.getItem('count')) {
+      new Audio(click).play();
       setClicksPerSecond(clicksPerSecond + addValue);
       setCount(count - cost);
       setShopItemCounts(prevCounts => {
@@ -52,14 +56,17 @@ function App() {
     // Ejecutar la mejora
     if (upgradeId === 1) {
       console.log("Mejora 1: Cada click suma 2");
+      new Audio(unlock).play();
       setClickMultiplier(2);
   
     } else if (upgradeId === 2) {
       console.log("Mejora 2: La producción total aumenta un 20%");
+      new Audio(unlock).play();
       setIsProductionBoostActive(true);
   
     } else if (upgradeId === 3) {
       console.log("Mejora 3: Buff de 10 segundos cada minuto");
+      new Audio(unlock).play();
   
       setClickMultiplier(100);
       setIsBuffActive(true);
@@ -84,6 +91,7 @@ function App() {
   
     } else if (upgradeId === 4) {
       console.log("Mejora 4: Te regalan 10 máquinas picadoras");
+      new Audio(unlock).play();
   
       const roboticArmBoost = 10;
       const cpsPerRoboticArm = 250;
@@ -106,6 +114,7 @@ function App() {
   
     } else if (upgradeId === 5) {
       console.log("Mejora 5: Toda la producción se multiplica por 10");
+      new Audio(unlock).play();
       setClicksPerSecond(prev => {
         const updated = prev * 10;
         localStorage.setItem('clicksPerSecond', updated);
@@ -156,6 +165,7 @@ function App() {
       setCount(0);
       setClicksPerSecond(0);
       setShopItemCounts({ kid: 0, stick: 0, gum: 0, roboticarm: 0 });
+      new Audio(win).play();
     }
   }, [count]);
 
@@ -204,6 +214,7 @@ function App() {
   
     // Actualizar contador
     setCount(prev => prev + clickMultiplier);
+    new Audio(click).play();
   };
 
   
