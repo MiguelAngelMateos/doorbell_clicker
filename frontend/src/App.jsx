@@ -8,6 +8,7 @@ import { Header, Objective, Upgrades, Shop } from './components';
 import click from './assets/sounds/click.mp3';
 import win from './assets/sounds/win.mp3';
 import unlock from './assets/sounds/unlock.mp3';
+import { AuthProvider } from "./context/AuthContext";
 
 import doorbell from './assets/icons/doorbell.png'
 
@@ -222,63 +223,65 @@ function App() {
 
 
   return (
-    <Router>
-      <Routes>
-        {/* Ruta principal */}
-        <Route
-          path="/"
-          element={
-            <div className="relative h-screen overflow-hidden">
-              <img
-                src="/images/wallpaper.png"
-                alt="Fondo"
-                className="absolute top-0 left-0 w-full h-full object-cover z-[-1]"
-              />
-              <div className=''>
-                <Header count={count} clicksPerSecond={clicksPerSecond} />
+    <AuthProvider>
+      <Router>
+        <Routes>
+          {/* Ruta principal */}
+          <Route
+            path="/"
+            element={
+              <div className="relative h-screen overflow-hidden">
                 <img
-                  onClick={handleClick}
-                  draggable="false"
-                  src={doorbell}
-                  alt="Doorbell"
-                  className="absolute left-[16%] top-[52%] transform -translate-x-1/2 -translate-y-1/2 w-[20%] cursor-pointer"
+                  src="/images/wallpaper.png"
+                  alt="Fondo"
+                  className="absolute top-0 left-0 w-full h-full object-cover z-[-1]"
                 />
-                {floatingNumbers.map((num) => (
-                  <div
-                    key={num.id}
-                    className="floating-number text-green-500 text-xl font-bold select-none pointer-events-none"
-                    style={{
-                      position: 'absolute',
-                      left: num.x + 5,
-                      top: num.y - 20,
-                    }}
-                  >
-                    {num.value}
+                <div className=''>
+                  <Header count={count} clicksPerSecond={clicksPerSecond} />
+                  <img
+                    onClick={handleClick}
+                    draggable="false"
+                    src={doorbell}
+                    alt="Doorbell"
+                    className="absolute left-[16%] top-[52%] transform -translate-x-1/2 -translate-y-1/2 w-[20%] cursor-pointer"
+                  />
+                  {floatingNumbers.map((num) => (
+                    <div
+                      key={num.id}
+                      className="floating-number text-green-500 text-xl font-bold select-none pointer-events-none"
+                      style={{
+                        position: 'absolute',
+                        left: num.x + 5,
+                        top: num.y - 20,
+                      }}
+                    >
+                      {num.value}
+                    </div>
+                  ))}
+                  <div className='fixed top-[10vh] left-[-50px] z-10 w-[1000px]'>
+                    {hasWon ? (
+                        <Objective title="Has ganado!" content="Has alcanzado 100 millones de timbres." className="hasWon" />
+                    ) : (
+                      <Objective title="Objetivo final" content="Timbra 100 millones de veces!!" />
+                    )}
                   </div>
-                ))}
-                <div className='fixed top-[10vh] left-[-50px] z-10 w-[1000px]'>
-                  {hasWon ? (
-                      <Objective title="Has ganado!" content="Has alcanzado 100 millones de timbres." className="hasWon" />
-                  ) : (
-                    <Objective title="Objetivo final" content="Timbra 100 millones de veces!!" />
-                  )}
-                </div>
-                <div className="flex ml-auto w-[55%] menu_shadow h-screen">
-                  <div className="flex flex-col gap-12 w-4/6 ml-auto mr-20 mt-10">
-                    <Upgrades count={count} upgrades={upgrades} />
-                    <Shop calculateClicksPerSecond={calculateClicksPerSecond} shopItemCounts={shopItemCounts} />
+                  <div className="flex ml-auto w-[55%] menu_shadow h-screen">
+                    <div className="flex flex-col gap-12 w-4/6 ml-auto mr-20 mt-10">
+                      <Upgrades count={count} upgrades={upgrades} />
+                      <Shop calculateClicksPerSecond={calculateClicksPerSecond} shopItemCounts={shopItemCounts} />
+                    </div>
                   </div>
                 </div>
               </div>
-            </div>
-          }
-        />
-      
-        <Route path="/Leaderboard" element={<Leaderboard />} />
-        <Route path="/Login" element={<Login />}></Route>
-        <Route path="/Register" element={<Register />}></Route>
-      </Routes>
-    </Router>
+            }
+          />
+        
+          <Route path="/Leaderboard" element={<Leaderboard />} />
+          <Route path="/Login" element={<Login />}></Route>
+          <Route path="/Register" element={<Register />}></Route>
+        </Routes>
+      </Router>
+    </AuthProvider>
   );
 }
 

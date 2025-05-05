@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Link, useNavigate } from 'react-router-dom';
 import arrow from '../assets/icons/arrow.png';
+import { useAuth } from "../context/AuthContext"; 
 
 function Login() {
     const [username, setUsername] = useState("");
@@ -8,8 +9,11 @@ function Login() {
     const [errorMessage, setErrorMessage] = useState("");
     const navigate = useNavigate();
 
+    const { login } = useAuth();
+
     const handleLogin = async (e) => {
         e.preventDefault();
+
         const res = await fetch("http://localhost:3000/api/auth/login", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
@@ -19,7 +23,7 @@ function Login() {
         const data = await res.json();
         
         if (res.ok) {
-            localStorage.setItem("token", data.token);
+            login(data.token)            
             navigate("/");
         } else {
             setErrorMessage(data.message);

@@ -1,8 +1,12 @@
 import { useState, useEffect } from 'react';
 import arrow from '../assets/icons/arrow.png';
 import { Link } from 'react-router-dom';
+import { useAuth } from "../context/AuthContext"; 
+
 
 function Leaderboard() {
+    const { isAuthenticated } = useAuth();
+
     return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-gray-900 to-black py-12 px-4 sm:px-6 lg:px-8">
         <img
@@ -15,7 +19,11 @@ function Leaderboard() {
             <Link to="/" className="absolute top-4 left-18">
                 <img src={arrow} alt="Flecha para volver" className="w-14 h-14" />
             </Link>
-            <span className="absolute top-4 right-10 text-xl">Iniciar sesión/Registrarte</span>
+            {!isAuthenticated && (
+                <Link to="/login" className="absolute top-4 right-10 text-xl">
+                    Iniciar sesión / Registrarte
+                </Link>
+            )}
             <div className="mt-24 h-100"> {/* Div para añadir la clasificación */ }
                 <h1 className="flex justify-center items-center text-4xl border-1">Clasificación</h1>
             </div>

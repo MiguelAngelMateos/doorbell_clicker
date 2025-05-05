@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Link, useNavigate } from 'react-router-dom';
+import { useAuth } from "../context/AuthContext"; 
 
 function Register() {
     const [username, setUsername] = useState("");
@@ -7,6 +8,8 @@ function Register() {
     const [password, setPassword] = useState("");
     const [errorMessage, setErrorMessage] = useState("");
     const navigate = useNavigate();
+
+    const { login } = useAuth();
 
     const handleLogin = async (e) => {
         e.preventDefault();
@@ -19,7 +22,7 @@ function Register() {
         const data = await res.json();
         
         if (res.ok) {
-            localStorage.setItem("token", data.token);
+            login(data.token)
             navigate("/Login");
         } else {
             setErrorMessage(data.message);

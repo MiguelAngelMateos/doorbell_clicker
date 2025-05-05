@@ -1,40 +1,15 @@
 import { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import incognite from '../assets/icons/incognite.png';
+import { useAuth } from "../context/AuthContext";
 
 function Header({ count, clicksPerSecond }) {
-    const [isAuthenticated, setIsAuthenticated] = useState(false);
-    const [username, setUsername] = useState("");
-
-    useEffect(() => {
-        const token = localStorage.getItem("token");
-
-        if (token) {
-            setIsAuthenticated(true);
-            fetch("http://localhost:3000/api/users/username", {
-                headers: {
-                    Authorization: `${token}`
-                }
-            })
-            .then(res => {
-                if (!res.ok) throw new Error("Token inválido");
-                return res.json();
-            })
-            .then(data => {
-                setUsername(data.username);
-            })
-            .catch(err => {
-                console.error(err);
-                localStorage.removeItem("token");
-                setIsAuthenticated(false);
-            });
-        }
-    }, []);
+    const { isAuthenticated, username, logout } = useAuth();
+    const navigate = useNavigate();
 
     const handleLogout = () => {
-        localStorage.removeItem("token");
-        setIsAuthenticated(false);
-        navigate("/Login");
+      logout(); 
+      navigate("/Login");
     };
     
     return (
