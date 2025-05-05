@@ -38,7 +38,7 @@ function Shop({ calculateClicksPerSecond, shopItemCounts }) {
                 <ul className='flex flex-col gap-2'>
                     <li onClick={() => calculateClicksPerSecond(1 * multiplier, 25 * multiplier, 'kid', multiplier)} className='relative group'>
                         <ShopItem name="Niño travieso" price={25 * multiplier} image={kid} itemCount={shopItemCounts.kid} />
-                        <div className='fixed left-[55%] top-[52.5%] transform -translate-x-1/2 w-[300px] p-2 text-sm text-gray-700 bg-white border border-gray-300 rounded-md shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-opacity duration-200 z-10'>
+                        <div className={`${(localStorage.getItem('count') >= 25 / 2 || shopItemCounts.kid !== 0) ? "" : "hidden"} fixed left-[55%] top-[52.5%] transform -translate-x-1/2 w-[300px] p-2 text-sm text-gray-700 bg-white border border-gray-300 rounded-md shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-opacity duration-200 z-10`}>
                             <p className='font-extrabold text-xl'>Niño travieso</p>
                             <br />
                             <p>Este niño se aburre y no tiene nada mejor que hacer que ayudarte en tu malevolo objetivo.</p>
@@ -50,7 +50,7 @@ function Shop({ calculateClicksPerSecond, shopItemCounts }) {
                     </li>
                     <li onClick={() => calculateClicksPerSecond(25 * multiplier, 500 * multiplier, 'stick', multiplier)} className='relative group'>
                         <ShopItem name="Palillo" price={500 * multiplier} image={stick} itemCount={shopItemCounts.stick} />
-                        <div className='fixed left-[55%] top-[64%] transform -translate-x-1/2 w-[300px] p-2 text-sm text-gray-700 bg-white border border-gray-300 rounded-md shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-opacity duration-200 z-10'>
+                        <div className={`${(localStorage.getItem('count') >= 500 / 2 || shopItemCounts.stick !== 0) ? "" : "hidden"} fixed left-[55%] top-[64%] transform -translate-x-1/2 w-[300px] p-2 text-sm text-gray-700 bg-white border border-gray-300 rounded-md shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-opacity duration-200 z-10`}>
                             <p className='font-extrabold text-xl'>Palillo</p>
                             <br />
                             <p>Engancha este palillo a un timbre y dejalo sonando hasta el infinito!</p>
@@ -62,7 +62,7 @@ function Shop({ calculateClicksPerSecond, shopItemCounts }) {
                     </li>
                     <li onClick={() => calculateClicksPerSecond(150 * multiplier, 3000 * multiplier, 'gum', multiplier)} className='relative group'>
                         <ShopItem name="Chicle" price={4000 * multiplier} image={gum} itemCount={shopItemCounts.gum} />
-                        <div className='fixed left-[55%] top-[64%] transform -translate-x-1/2 w-[300px] p-2 text-sm text-gray-700 bg-white border border-gray-300 rounded-md shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-opacity duration-200 z-10'>
+                        <div className={`${(localStorage.getItem('count') >= 4000 / 2 || shopItemCounts.gum !== 0) ? "" : "hidden"} fixed left-[55%] top-[64%] transform -translate-x-1/2 w-[300px] p-2 text-sm text-gray-700 bg-white border border-gray-300 rounded-md shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-opacity duration-200 z-10`}>
                             <p className='font-extrabold text-xl'>Chicle</p>
                             <br />
                             <p>Moderniza tus palillos con un buen chicle mascado y maximiza tus ganancias! Tus vecinos y odiarán!</p>
@@ -74,7 +74,7 @@ function Shop({ calculateClicksPerSecond, shopItemCounts }) {
                     </li>
                     <li onClick={() => calculateClicksPerSecond(500 * multiplier, 30000 * multiplier, 'roboticarm', multiplier)} className='relative group'>
                         <ShopItem name="Robot" price={40000 * multiplier} image={roboticarm} itemCount={shopItemCounts.roboticarm} />
-                        <div className='fixed left-[55%] top-[75%] transform -translate-x-1/2 w-[300px] p-2 text-sm text-gray-700 bg-white border border-gray-300 rounded-md shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-opacity duration-200 z-10'>
+                        <div className={`${(localStorage.getItem('count') >= 40000 / 2 || shopItemCounts.roboticarm !== 0) ? "" : "hidden"} fixed left-[55%] top-[75%] transform -translate-x-1/2 w-[300px] p-2 text-sm text-gray-700 bg-white border border-gray-300 rounded-md shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-opacity duration-200 z-10`}>
                             <p className='font-extrabold text-xl'>Robot</p>
                             <br />
                             <p>El futuro esta aqui... pon a los robots de tu lado y no te atacarán en la revolución! Nadie toca más.. timbres... que un robot!</p>
