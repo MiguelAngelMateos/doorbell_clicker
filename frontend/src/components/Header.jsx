@@ -3,7 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import incognite from '../assets/icons/incognite.png';
 import { useAuth } from "../context/AuthContext";
 
-function Header({ count, clicksPerSecond }) {
+function Header({ count, clicksPerSecond, timer, formatTime }) {
     const { isAuthenticated, username, logout } = useAuth();
     const navigate = useNavigate();
 
@@ -30,6 +30,9 @@ function Header({ count, clicksPerSecond }) {
                 <div className='ml-40'>
                     <h1 className="text-5xl bubble-text">{count.toFixed(0)} timbres</h1>
                     <span className="text-2xl">Timbres por segundo: {clicksPerSecond.toFixed(0)}</span>
+                </div>
+                <div>
+                    <span className="text-2xl">Tiempo transcurrido: {formatTime(timer)}</span>
                 </div>
             </div>
             <div className="flex mr-20 gap-18 text-2xl">

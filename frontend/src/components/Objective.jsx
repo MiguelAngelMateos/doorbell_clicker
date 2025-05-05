@@ -1,6 +1,6 @@
 import simplebell from '../assets/icons/simplebell.png'
 
-function Objective({title, content}) {
+function Objective({ title, content, onRestart }) {
     return (
         <div className={`inline-block bg-[#38BAF2] rounded-4xl p-4 absolute mt-150 ml-58 border-[#20417E] border-10 max-w-90 max-h-64 ${title == "Has ganado!" ? "pb-24" : ""} `}>
             <div className="bubble-text text-[#fbca1f] flex flex-col items-center py-2 border-10 border-[#1B5A82] rounded-xl">
@@ -11,11 +11,7 @@ function Objective({title, content}) {
                 </div>
                 <button
                     className={`${title === "Has ganado!" ? "win-button text-gray-800" : "hidden"}`}
-                    onClick={() => {
-                        window.location.reload(true); // No siempre forzará el reload desde el servidor
-                        // Alternativa más efectiva:
-                        window.location.href = window.location.href; // Forzar recarga desde servidor
-                    }}
+                    onClick={onRestart}
                     >
                     Volver a jugar
                 </button>

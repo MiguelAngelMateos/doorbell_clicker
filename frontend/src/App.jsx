@@ -1,5 +1,5 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import './App.css'
 import Leaderboard from './views/Leaderboard';
 import Login from './views/Login';
@@ -143,6 +143,8 @@ function App() {
 
   // Actualiza automaticamente los timbres totales cada 0.10 segundos segun los timbres por segundo
   useEffect(() => {
+    if (hasWon) return;
+
     const interval = setInterval(() => {
       let production = clicksPerSecond / 20; // Producción base
   
@@ -157,18 +159,72 @@ function App() {
     return () => clearInterval(interval);
   }, [clicksPerSecond, isProductionBoostActive]);
 
+  //Timer
+  const [time, setTime] = useState(0); // en milisegundos
+  const intervalRef = useRef(null);
+
+  useEffect(() => {
+    intervalRef.current = setInterval(() => {
+      setTime(prev => prev + 10); // actualiza cada 10 ms
+    }, 10);
+
+    return () => clearInterval(intervalRef.current);
+  }, []);
+
+  const formatTime = (ms) => {
+    const minutes = Math.floor(ms / 60000);
+    const seconds = Math.floor((ms % 60000) / 1000);
+    const milliseconds = (ms % 1000) / 10; // dos dígitos
+    return `${minutes.toString().padStart(2, '0')}:${seconds
+      .toString()
+      .padStart(2, '0')}.${milliseconds.toString().padStart(2, '0')}`;
+  };
+
   // Win condition
   const [hasWon, setHasWon] = useState(false);
 
   useEffect(() => {
     if (count >= 100000000 && !hasWon) {
       setHasWon(true);
-      setCount(0);
-      setClicksPerSecond(0);
-      setShopItemCounts({ kid: 0, stick: 0, gum: 0, roboticarm: 0 });
+      clearInterval(intervalRef.current);
       new Audio(win).play();
+
+      // Llamada a la API para guardar resultado
+      const saveResult = async () => {
+        try {
+          const res = await fetch("http://localhost:3000/api/leaderboard/save", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${localStorage.getItem("token")}`,
+            },
+            body: JSON.stringify({
+              username,
+              time, // en milisegundos
+            }),
+          });
+
+          if (!res.ok) {
+            const errorData = await res.json();
+            console.error("Error al guardar resultado:", errorData.message);
+          }
+        } catch (error) {
+          console.error("Error de red al guardar resultado:", error.message);
+        }
+      };
+
+      saveResult();
     }
   }, [count]);
+
+  const handleRestart = () => {
+    setHasWon(false);
+    setCount(0);
+    setTime(0);
+    setClicksPerSecond(0);
+    setShopItemCounts({ kid: 0, stick: 0, gum: 0, roboticarm: 0 });
+    window.location.reload();
+  };
 
   // Trucos de desarrollador
   useEffect(() => {
@@ -237,7 +293,7 @@ function App() {
                   className="absolute top-0 left-0 w-full h-full object-cover z-[-1]"
                 />
                 <div className=''>
-                  <Header count={count} clicksPerSecond={clicksPerSecond} />
+                  <Header count={count} clicksPerSecond={clicksPerSecond} timer={time} formatTime={formatTime} />
                   <img
                     onClick={handleClick}
                     draggable="false"
@@ -260,9 +316,9 @@ function App() {
                   ))}
                   <div className='fixed top-[10vh] left-[-50px] z-10 w-[1000px]'>
                     {hasWon ? (
-                        <Objective title="Has ganado!" content="Has alcanzado 100 millones de timbres." className="hasWon" />
+                        <Objective title="Has ganado!" content="Has alcanzado 100 millones de timbres." className="hasWon" onRestart={handleRestart}/>
                     ) : (
-                      <Objective title="Objetivo final" content="Timbra 100 millones de veces!!" />
+                        <Objective title="Objetivo final" content="Timbra 100 millones de veces!!" />
                     )}
                   </div>
                   <div className="flex ml-auto w-[55%] menu_shadow h-screen">
