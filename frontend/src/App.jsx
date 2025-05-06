@@ -9,10 +9,12 @@ import click from './assets/sounds/click.mp3';
 import win from './assets/sounds/win.mp3';
 import unlock from './assets/sounds/unlock.mp3';
 import { AuthProvider } from "./context/AuthContext";
+import { useAuth } from "./context/AuthContext";
 
 import doorbell from './assets/icons/doorbell.png'
 
 function App() {
+  const { isAuthenticated, username } = useAuth();
   // Declarar variables y localstorage del contador principal de timbres
   const [count, setCount] = useState(() => {
     const savedCount = localStorage.getItem('count');
@@ -190,30 +192,36 @@ function App() {
       new Audio(win).play();
 
       // Llamada a la API para guardar resultado
-      const saveResult = async () => {
-        try {
-          const res = await fetch("http://localhost:3000/api/leaderboard/save", {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-              Authorization: `Bearer ${localStorage.getItem("token")}`,
-            },
-            body: JSON.stringify({
-              username,
-              time, // en milisegundos
-            }),
-          });
+      if (isAuthenticated) {
+        const saveResult = async () => {
+          try {
+            const token = localStorage.getItem("token");
+            const res = await fetch("http://localhost:3000/api/leaderboards/save", {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+                Authorization: token,
+              },
+              body: JSON.stringify({
+                username,
+                time, // en milisegundos
+              }),
+            });
 
-          if (!res.ok) {
-            const errorData = await res.json();
-            console.error("Error al guardar resultado:", errorData.message);
+            const data = await res.json();
+  
+            if (!res.ok) {
+              console.error("Error al guardar resultado:", data.message);
+            } else {
+              console.log("Respuesta del servidor:", data.message);
+            }
+          } catch (error) {
+            console.error("Error de red al guardar resultado:", error.message);
           }
-        } catch (error) {
-          console.error("Error de red al guardar resultado:", error.message);
-        }
-      };
-
-      saveResult();
+        };
+  
+        saveResult();
+      }
     }
   }, [count]);
 
