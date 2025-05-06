@@ -7,10 +7,53 @@ import RankingUser from '../components/RankingUser';
 
 function Leaderboard() {
     const { isAuthenticated } = useAuth();
-    const pepe = "pepe";
-    const time1 = "20:34:09";
-    const juan = "Juan";
-    const time2 = "21:34:09";
+    // array donde meter el top 100 players
+    const players = [];
+
+    // ejemplo de variable donde meter el jugador logueado en ese momento
+    const actualPlayer = {
+        username: "pepe",
+        record: "20:00",
+        position: 1
+    }
+
+    // Ejemplo de como deberia ser un player con los campos que debe tener
+    players[0] = {
+        username: "pepe",
+        record: "20:00",
+        position: 1
+    }
+
+    players[1] = {
+        username: "maria",
+        record: "21:35",
+        position: 2
+    };
+    
+    players[2] = {
+        username: "lucas",
+        record: "22:10",
+        position: 3
+    };
+    
+    players[3] = {
+        username: "ana",
+        record: "23:45",
+        position: 4
+    };
+    
+    players[4] = {
+        username: "carlos",
+        record: "25:00",
+        position: 5
+    };
+
+
+    // Creo una variable con un componente RankingUser por cada player
+    const listPlayers = players.map((player, index) => 
+        <RankingUser key={`${player.username}-${index}`} player={player}></RankingUser>
+    )
+
     return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-gray-900 to-black py-12 px-4 sm:px-6 lg:px-8">
         <img
@@ -28,18 +71,18 @@ function Leaderboard() {
                     Iniciar sesión / Registrarte
                 </Link>
             )}
-            <div className="mt-24 h-100 flex flex-col items-center"> {/* Div para añadir la clasificación */ }
-                <h1 className="flex justify-center items-center text-4xl mb-10">Clasificación</h1>
-                <RankingUser username={pepe} time={time1} position={1}></RankingUser>
-                <RankingUser username={juan} time={time2} position={2}></RankingUser>
-
+            <div className="mt-12 h-120 max-h-120 flex flex-col items-center overflow-auto no-scrollbar">
+                <div className="flex w-full justify-center items-center text-4xl pb-4 sticky top-0 z-10 bg-gray-800 bg-opacity-80">
+                    <h1>Clasificación</h1>
+                </div>
+                {listPlayers}
             </div>
-            <div className="w-full text-center"> {/* Div pegado abajo */}
-                <h2 className="text-4xl mb-10">Tu posición</h2>
+            <div className="w-full text-center flex flex-col items-center">
+                <h2 className="text-4xl mb-4">Tu posición</h2>
                 {!isAuthenticated ? (
                     <p className="text-2xl opacity-70">Inicia sesión para ver tu posición</p>
                 ) : (
-                    <RankingUser username={pepe} time={time1} position={1}></RankingUser>
+                    <RankingUser key={100} player={actualPlayer}></RankingUser>
                 )}
             </div>
         </div>

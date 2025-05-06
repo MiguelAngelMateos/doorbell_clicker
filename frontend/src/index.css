@@ -28,6 +28,16 @@ body {
   font-style: normal;
 }
 
+@layer utilities {
+  .no-scrollbar::-webkit-scrollbar {
+   display: none;
+  }
+  .no-scrollbar {
+   -ms-overflow-style: none;
+   scrollbar-width: none;
+  }
+ }
+
 .bubble-text {
   font-family: 'Game Bubble', sans-serif;
 }
