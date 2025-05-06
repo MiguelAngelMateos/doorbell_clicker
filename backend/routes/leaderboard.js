@@ -28,6 +28,29 @@ router.post("/save", authMiddleware, async (req, res) => {
     } catch (err) {
       res.status(500).json({ message: err.message });
     }
-  });
+});
+
+router.get("/top", async (req, res) => {
+  try {
+    // obtener los 100 mejores jugadores
+    const topPlayers = await User.find({ record: { $exists: true, $ne: null } }) // filtra solo los usuarios con tiempos registrados
+      .sort({ record: 1 }) // ordenar de menor a mayor
+      .limit(100); // maximo 100 jugadores
+
+    if (topPlayers.length === 0) {
+      return res.status(404).json({ message: "No hay jugadores con tiempos registrados" });
+    }
+
+    // incluye la posicion del jugador
+    const topPlayersWithPosition = topPlayers.map((player, index) => ({
+      ...player.toObject(),
+      position: index + 1
+    }));
+
+    res.json({ topPlayers: topPlayersWithPosition });
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+});
   
 export default router;
