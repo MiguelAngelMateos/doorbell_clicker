@@ -24,8 +24,9 @@ export const AuthProvider = ({ children }) => {
   // Obtener el nombre de usuario desde el backend
   const fetchUserData = async () => {
     const token = localStorage.getItem("token");
-
+    
     if (token) {
+      setIsAuthenticated(true);
       try {
         const response = await fetch("http://localhost:3000/api/users/username", {
           headers: {
@@ -48,6 +49,7 @@ export const AuthProvider = ({ children }) => {
 
   // Usar useEffect para obtener datos del usuario al montar el componente
   React.useEffect(() => {
+    console.log("entra en el react.useEffect")
     fetchUserData();
   }, [isAuthenticated]);  // Dependemos de isAuthenticated para actualizar la info del usuario
 

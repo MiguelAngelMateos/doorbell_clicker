@@ -1,16 +1,10 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { useState, useEffect, useRef } from 'react'
 import './App.css'
-import Leaderboard from './views/Leaderboard';
-import Login from './views/Login';
-import Register from './views/Register';
+import { Leaderboard, Login, Register } from './views';
 import { Header, Objective, Upgrades, Shop } from './components';
-import click from './assets/sounds/click.mp3';
-import win from './assets/sounds/win.mp3';
-import unlock from './assets/sounds/unlock.mp3';
-import { AuthProvider } from "./context/AuthContext";
-import { useAuth } from "./context/AuthContext";
-
+import { click, win, unlock } from './assets/sounds';
+import { AuthProvider, useAuth } from "./context/AuthContext";
 import doorbell from './assets/icons/doorbell.png'
 
 function App() {
@@ -162,7 +156,15 @@ function App() {
   }, [clicksPerSecond, isProductionBoostActive]);
 
   //Timer
-  const [time, setTime] = useState(0); // en milisegundos
+  const [time, setTime] = useState(() => {
+    const savedTime = localStorage.getItem('time');
+    return savedTime ? parseInt(savedTime) : 0;
+  }); // en milisegundos
+  
+  // Guarda tiempo actual en localstorage
+  useEffect(() => {
+    localStorage.setItem('time', JSON.stringify(time))
+  }, [time]);
   const intervalRef = useRef(null);
 
   useEffect(() => {
@@ -185,39 +187,39 @@ function App() {
   // Win condition
   const [hasWon, setHasWon] = useState(false);
 
+  // Llamada a la API para guardar resultado
+  const saveResult = async () => {
+    try {
+      const token = localStorage.getItem("token");
+      const res = await fetch("http://localhost:3000/api/leaderboards/save", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: token,
+        },
+        body: JSON.stringify({
+          username,
+          time,
+        }),
+      });
+
+      const data = await res.json();
+
+      if (!res.ok) {
+        console.error("Error al guardar resultado:", data.message);
+      } else {
+        console.log("Respuesta del servidor:", data.message);
+      }
+    } catch (error) {
+      console.error("Error de red al guardar resultado:", error.message);
+    }
+  };
+
   useEffect(() => {
     if (count >= 100000000 && !hasWon) {
       setHasWon(true);
       clearInterval(intervalRef.current);
       new Audio(win).play();
-
-      // Llamada a la API para guardar resultado
-      const saveResult = async () => {
-        try {
-          const token = localStorage.getItem("token");
-          const res = await fetch("http://localhost:3000/api/leaderboards/save", {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-              Authorization: token,
-            },
-            body: JSON.stringify({
-              username,
-              time,
-            }),
-          });
-
-          const data = await res.json();
-
-          if (!res.ok) {
-            console.error("Error al guardar resultado:", data.message);
-          } else {
-            console.log("Respuesta del servidor:", data.message);
-          }
-        } catch (error) {
-          console.error("Error de red al guardar resultado:", error.message);
-        }
-      };
 
       saveResult();
     }
@@ -285,65 +287,63 @@ function App() {
 
 
   return (
-    <AuthProvider>
-      <Router>
-        <Routes>
-          {/* Ruta principal */}
-          <Route
-            path="/"
-            element={
-              <div className="relative h-screen overflow-hidden">
+    <Router>
+      <Routes>
+        {/* Ruta principal */}
+        <Route
+          path="/"
+          element={
+            <div className="relative h-screen overflow-hidden">
+              <img
+                src="/images/wallpaper.png"
+                alt="Fondo"
+                className="absolute top-0 left-0 w-full h-full object-cover z-[-1]"
+              />
+              <div className=''>
+                <Header count={count} clicksPerSecond={clicksPerSecond} timer={time} formatTime={formatTime} />
                 <img
-                  src="/images/wallpaper.png"
-                  alt="Fondo"
-                  className="absolute top-0 left-0 w-full h-full object-cover z-[-1]"
+                  onClick={handleClick}
+                  draggable="false"
+                  src={doorbell}
+                  alt="Doorbell"
+                  className="absolute left-[16%] top-[52%] transform -translate-x-1/2 -translate-y-1/2 w-[20%] cursor-pointer"
                 />
-                <div className=''>
-                  <Header count={count} clicksPerSecond={clicksPerSecond} timer={time} formatTime={formatTime} />
-                  <img
-                    onClick={handleClick}
-                    draggable="false"
-                    src={doorbell}
-                    alt="Doorbell"
-                    className="absolute left-[16%] top-[52%] transform -translate-x-1/2 -translate-y-1/2 w-[20%] cursor-pointer"
-                  />
-                  {floatingNumbers.map((num) => (
-                    <div
-                      key={num.id}
-                      className="floating-number text-green-500 text-xl font-bold select-none pointer-events-none"
-                      style={{
-                        position: 'absolute',
-                        left: num.x + 5,
-                        top: num.y - 20,
-                      }}
-                    >
-                      {num.value}
-                    </div>
-                  ))}
-                  <div className='fixed top-[10vh] left-[-50px] z-10 w-[1000px]'>
-                    {hasWon ? (
-                        <Objective title="Has ganado!" content="Has alcanzado 100 millones de timbres." className="hasWon" onRestart={handleRestart}/>
-                    ) : (
-                        <Objective title="Objetivo final" content="Timbra 100 millones de veces!!" />
-                    )}
+                {floatingNumbers.map((num) => (
+                  <div
+                    key={num.id}
+                    className="floating-number text-green-500 text-xl font-bold select-none pointer-events-none"
+                    style={{
+                      position: 'absolute',
+                      left: num.x + 5,
+                      top: num.y - 20,
+                    }}
+                  >
+                    {num.value}
                   </div>
-                  <div className="flex ml-auto w-[55%] menu_shadow h-screen">
-                    <div className="flex flex-col gap-12 w-4/6 ml-auto mr-20 mt-10">
-                      <Upgrades count={count} upgrades={upgrades} />
-                      <Shop calculateClicksPerSecond={calculateClicksPerSecond} shopItemCounts={shopItemCounts} />
-                    </div>
+                ))}
+                <div className='fixed top-[10vh] left-[-50px] z-10 w-[1000px]'>
+                  {hasWon ? (
+                      <Objective title="Has ganado!" content="Has alcanzado 100 millones de timbres." className="hasWon" onRestart={handleRestart}/>
+                  ) : (
+                      <Objective title="Objetivo final" content="Timbra 100 millones de veces!!" />
+                  )}
+                </div>
+                <div className="flex ml-auto w-[55%] menu_shadow h-screen">
+                  <div className="flex flex-col gap-12 w-4/6 ml-auto mr-20 mt-10">
+                    <Upgrades count={count} upgrades={upgrades} />
+                    <Shop calculateClicksPerSecond={calculateClicksPerSecond} shopItemCounts={shopItemCounts} />
                   </div>
                 </div>
               </div>
-            }
-          />
-        
-          <Route path="/Leaderboard" element={<Leaderboard />} />
-          <Route path="/Login" element={<Login />}></Route>
-          <Route path="/Register" element={<Register />}></Route>
-        </Routes>
-      </Router>
-    </AuthProvider>
+            </div>
+          }
+        />
+      
+        <Route path="/Leaderboard" element={<Leaderboard />} />
+        <Route path="/Login" element={<Login />}></Route>
+        <Route path="/Register" element={<Register />}></Route>
+      </Routes>
+    </Router>
   );
 }
 
