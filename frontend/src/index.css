@@ -7,6 +7,12 @@ body {
   margin: 0;
 }
 
+@theme {
+  --color-amarillo: #FFD700;
+  --color-blanco: #F2F2F2;
+  --color-plata: #B0B0B0;
+  --color-bronce: #CD7F32;
+}
 
 @font-face {
   font-family: 'Secret Thief';
