@@ -192,36 +192,34 @@ function App() {
       new Audio(win).play();
 
       // Llamada a la API para guardar resultado
-      if (isAuthenticated) {
-        const saveResult = async () => {
-          try {
-            const token = localStorage.getItem("token");
-            const res = await fetch("http://localhost:3000/api/leaderboards/save", {
-              method: "POST",
-              headers: {
-                "Content-Type": "application/json",
-                Authorization: token,
-              },
-              body: JSON.stringify({
-                username,
-                time, // en milisegundos
-              }),
-            });
+      const saveResult = async () => {
+        try {
+          const token = localStorage.getItem("token");
+          const res = await fetch("http://localhost:3000/api/leaderboards/save", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: token,
+            },
+            body: JSON.stringify({
+              username,
+              time,
+            }),
+          });
 
-            const data = await res.json();
-  
-            if (!res.ok) {
-              console.error("Error al guardar resultado:", data.message);
-            } else {
-              console.log("Respuesta del servidor:", data.message);
-            }
-          } catch (error) {
-            console.error("Error de red al guardar resultado:", error.message);
+          const data = await res.json();
+
+          if (!res.ok) {
+            console.error("Error al guardar resultado:", data.message);
+          } else {
+            console.log("Respuesta del servidor:", data.message);
           }
-        };
-  
-        saveResult();
-      }
+        } catch (error) {
+          console.error("Error de red al guardar resultado:", error.message);
+        }
+      };
+
+      saveResult();
     }
   }, [count]);
 
