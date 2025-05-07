@@ -22,9 +22,11 @@ router.post("/save", authMiddleware, async (req, res) => {
       if (user.record === undefined || user.record === null || time < user.record) {
         user.record = time;
         await user.save();
+        res.json({ success: true, message: "Record procesado correctamente" });
+      } else {
+        res.json({ success: false, message: "El tiempo no es un nuevo record" });
       }
-  
-      res.json({ message: "Record procesado correctamente" });
+
     } catch (err) {
       res.status(500).json({ message: err.message });
     }

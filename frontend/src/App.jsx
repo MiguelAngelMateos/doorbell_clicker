@@ -208,16 +208,18 @@ function App() {
           time,
         }),
       });
-
+  
       const data = await res.json();
-
+  
       if (!res.ok) {
         console.error("Error al guardar resultado:", data.message);
+        return false;
       } else {
-        console.log("Respuesta del servidor:", data.message);
+        return true;
       }
     } catch (error) {
       console.error("Error de red al guardar resultado:", error.message);
+      return false;
     }
   };
 
@@ -226,8 +228,18 @@ function App() {
       setHasWon(true);
       clearInterval(intervalRef.current);
       new Audio(win).play();
-
-      saveResult();
+  
+      const handleWin = async () => {
+        const result = await saveResult();
+        if (result.success === true) {
+          console.log("Resultado guardado exitosamente.");
+          // Ejecutar script de python para enviar correo
+        } else {
+          console.log("No es un nuevo récord:", result.message);
+        }
+      };
+  
+      handleWin();
     }
   }, [count]);
 
