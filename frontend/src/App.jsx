@@ -8,6 +8,8 @@ import { AuthProvider, useAuth } from "./context/AuthContext";
 import doorbell from './assets/icons/doorbell.png'
 
 function App() {
+  // Win condition
+  const [hasWon, setHasWon] = useState(false);
   const { isAuthenticated, username } = useAuth();
   // Declarar variables y localstorage del contador principal de timbres
   const [count, setCount] = useState(() => {
@@ -139,21 +141,23 @@ function App() {
 
   // Actualiza automaticamente los timbres totales cada 0.10 segundos segun los timbres por segundo
   useEffect(() => {
-    if (hasWon) return;
-
-    const interval = setInterval(() => {
-      let production = clicksPerSecond / 20; // Producción base
+    if (hasWon) {
+      setCount(100000000);
+      return;
+    }
   
-      // Si el boost está activo, añade un 20% adicional
+    const interval = setInterval(() => {
+      let production = clicksPerSecond / 20;
+  
       if (isProductionBoostActive) {
-        production += production * 0.2; // Incrementar en un 20%
+        production += production * 0.2;
       }
   
-      setCount((prevCount) => prevCount + production); // Actualizar el contador
+      setCount((prevCount) => prevCount + production);
     }, 50);
   
     return () => clearInterval(interval);
-  }, [clicksPerSecond, isProductionBoostActive]);
+  }, [clicksPerSecond, isProductionBoostActive, hasWon])
 
   //Timer
   const [time, setTime] = useState(() => {
@@ -168,12 +172,17 @@ function App() {
   const intervalRef = useRef(null);
 
   useEffect(() => {
+    if (hasWon) {
+      clearInterval(intervalRef.current);
+      return;
+    }
+  
     intervalRef.current = setInterval(() => {
-      setTime(prev => prev + 10); // actualiza cada 10 ms
+      setTime(prev => prev + 10);
     }, 10);
-
+  
     return () => clearInterval(intervalRef.current);
-  }, []);
+  }, [hasWon]);
 
   const formatTime = (ms) => {
     const minutes = Math.floor(ms / 60000);
@@ -183,9 +192,6 @@ function App() {
       .toString()
       .padStart(2, '0')}.${milliseconds.toString().padStart(2, '0')}`;
   };
-
-  // Win condition
-  const [hasWon, setHasWon] = useState(false);
 
   // Llamada a la API para guardar resultado
   const saveResult = async () => {
@@ -244,7 +250,7 @@ function App() {
         localStorage.setItem('appliedUpgrades', JSON.stringify([]));
       }
       if (event.key === 't' || event.key === 'T') {
-        setClicksPerSecond(prev => prev + 1000);
+        setClicksPerSecond(prev => prev + 100000);
       }
       if (event.key === 'w' || event.key === 'W') {
         setCount(prev => prev + 100000000);
