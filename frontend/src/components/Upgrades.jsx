@@ -39,8 +39,8 @@ function Upgrades({ count, upgrades }) {
                 newUpgrades[0] = true;
                 return newUpgrades;
             });
-            setNextUpgrade(2000);
-        } else if (count >= 2000 && numUpgrade === 2 && !hasUpgraded[1]) {
+            setNextUpgrade(5000);
+        } else if (count >= 5000 && numUpgrade === 2 && !hasUpgraded[1]) {
             setNumUpgrade(3);
             upgrades(2);
             setHasUpgraded((prev) => {
@@ -48,8 +48,8 @@ function Upgrades({ count, upgrades }) {
                 newUpgrades[1] = true;
                 return newUpgrades;
             });
-            setNextUpgrade(10000);
-        } else if (count >= 10000 && numUpgrade === 3 && !hasUpgraded[2]) {
+            setNextUpgrade(50000);
+        } else if (count >= 50000 && numUpgrade === 3 && !hasUpgraded[2]) {
             setNumUpgrade(4);
             upgrades(3);
             setHasUpgraded((prev) => {
@@ -57,8 +57,8 @@ function Upgrades({ count, upgrades }) {
                 newUpgrades[2] = true;
                 return newUpgrades;
             });
-            setNextUpgrade(100000);
-        } else if (count >= 100000 && numUpgrade === 4 && !hasUpgraded[3]) {
+            setNextUpgrade(1000000);
+        } else if (count >= 1000000 && numUpgrade === 4 && !hasUpgraded[3]) {
             setNumUpgrade(5);
             upgrades(4);
             setHasUpgraded((prev) => {
@@ -66,8 +66,8 @@ function Upgrades({ count, upgrades }) {
                 newUpgrades[3] = true;
                 return newUpgrades;
             });
-            setNextUpgrade(300000);
-        } else if (count >= 300000 && numUpgrade === 5 && !hasUpgraded[4]) {
+            setNextUpgrade(5000000);
+        } else if (count >= 5000000 && numUpgrade === 5 && !hasUpgraded[4]) {
             setNumUpgrade(6);
             upgrades(5);
             setHasUpgraded((prev) => {

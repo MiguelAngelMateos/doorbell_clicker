@@ -55,9 +55,9 @@ function App() {
   
     // Ejecutar la mejora
     if (upgradeId === 1) {
-      console.log("Mejora 1: Cada click suma 2");
+      console.log("Mejora 1: Cada click suma 5");
       new Audio(unlock).play();
-      setClickMultiplier(2);
+      setClickMultiplier(5);
   
     } else if (upgradeId === 2) {
       console.log("Mejora 2: La producción total aumenta un 20%");
@@ -68,7 +68,7 @@ function App() {
       console.log("Mejora 3: Buff de 10 segundos cada minuto");
       new Audio(unlock).play();
   
-      setClickMultiplier(100);
+      setClickMultiplier(10000);
       setIsBuffActive(true);
   
       setTimeout(() => {
@@ -77,7 +77,7 @@ function App() {
       }, 10000);
   
       const buffInterval = setInterval(() => {
-        setClickMultiplier(100);
+        setClickMultiplier(10000);
         setIsBuffActive(true);
   
         setTimeout(() => {
@@ -93,7 +93,7 @@ function App() {
       console.log("Mejora 4: Te regalan 10 máquinas picadoras");
       new Audio(unlock).play();
   
-      const roboticArmBoost = 10;
+      const roboticArmBoost = 100;
       const cpsPerRoboticArm = 250;
       const totalAddedCPS = roboticArmBoost * cpsPerRoboticArm;
   
@@ -270,7 +270,7 @@ function App() {
         localStorage.setItem('appliedUpgrades', JSON.stringify([]));
       }
       if (event.key === 't' || event.key === 'T') {
-        setClicksPerSecond(prev => prev + 100000);
+        setClicksPerSecond(prev => prev + 1000);
       }
       if (event.key === 'w' || event.key === 'W') {
         setCount(prev => prev + 100000000);
