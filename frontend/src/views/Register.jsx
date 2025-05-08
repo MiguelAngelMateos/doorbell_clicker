@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Link, useNavigate } from 'react-router-dom';
+import arrow from '../assets/icons/arrow.png';
 import { useAuth } from "../context/AuthContext"; 
 
 function Register() {
@@ -39,6 +40,9 @@ function Register() {
             
             <div className="max-w-md w-full space-y-8 bg-gray-800 bg-opacity-80 p-10 rounded-2xl border-2 border-yellow-400 shadow-2xl relative z-10">
                 <div>
+                    <Link to="/" className="absolute top-4 left-10">
+                        <img src={arrow} alt="Flecha para volver" className="w-10 h-10" />
+                    </Link>
                     <h2 className="mt-6 text-center text-3xl font-extrabold text-white">
                         Bienvenido
                     </h2>
@@ -58,6 +62,7 @@ function Register() {
                                 name="username"
                                 type="text"
                                 required
+                                maxLength={15}
                                 onChange={(e) => setUsername(e.target.value)}
                                 className="appearance-none relative block w-full px-3 py-3 border border-gray-600 placeholder-gray-400 text-white rounded-lg bg-gray-700 focus:outline-none focus:ring-2 focus:ring-yellow-400 focus:border-transparent"
                                 placeholder="Nombre de usuario"
@@ -73,6 +78,7 @@ function Register() {
                                 name="email"
                                 type="text"
                                 required
+                                pattern="^[^\s@]+@[^\s@]+\.[^\s@]+$"
                                 onChange={(e) => setEmail(e.target.value)}
                                 className="appearance-none relative block w-full px-3 py-3 border border-gray-600 placeholder-gray-400 text-white rounded-lg bg-gray-700 focus:outline-none focus:ring-2 focus:ring-yellow-400 focus:border-transparent"
                                 placeholder="Correo electrónico"
@@ -88,6 +94,8 @@ function Register() {
                                 name="password"
                                 type="password"
                                 required
+                                minLength={8}
+                                maxLength={30}
                                 onChange={(e) => setPassword(e.target.value)}
                                 className="appearance-none relative block w-full px-3 py-3 border border-gray-600 placeholder-gray-400 text-white rounded-lg bg-gray-700 focus:outline-none focus:ring-2 focus:ring-yellow-400 focus:border-transparent"
                                 placeholder="Contraseña"
