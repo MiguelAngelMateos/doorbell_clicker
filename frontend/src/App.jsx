@@ -6,6 +6,7 @@ import { Header, Objective, Upgrades, Shop } from './components';
 import { click, win, unlock } from './assets/sounds';
 import { AuthProvider, useAuth } from "./context/AuthContext";
 import doorbell from './assets/icons/doorbell.png'
+import axios from 'axios'
 
 function App() {
   // Win condition
@@ -193,10 +194,11 @@ function App() {
       .padStart(2, '0')}.${milliseconds.toString().padStart(2, '0')}`;
   };
 
+  const token = localStorage.getItem("token");
+
   // Llamada a la API para guardar resultado
   const saveResult = async () => {
     try {
-      const token = localStorage.getItem("token");
       const res = await fetch("http://localhost:3000/api/leaderboards/save", {
         method: "POST",
         headers: {
@@ -211,14 +213,14 @@ function App() {
   
       const data = await res.json();
   
-      if (!res.ok) {
-        console.error("Error al guardar resultado:", data.message);
+      if (!data.success) {
+        console.log("Error al guardar resultado:", data.message);
         return false;
       } else {
         return true;
       }
     } catch (error) {
-      console.error("Error de red al guardar resultado:", error.message);
+      console.log("Error de red al guardar resultado:", error.message);
       return false;
     }
   };
@@ -231,9 +233,15 @@ function App() {
   
       const handleWin = async () => {
         const result = await saveResult();
-        if (result.success === true) {
+        if (result) {
           console.log("Resultado guardado exitosamente.");
           // Ejecutar script de python para enviar correo
+          const resEmail = await axios.get("http://localhost:3000/api/users/sendEmail", {
+            headers: {
+              Authorization: token,
+            },
+          });          
+          console.log(resEmail.data);
         } else {
           console.log("No es un nuevo récord:", result.message);
         }
