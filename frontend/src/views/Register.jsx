@@ -62,7 +62,7 @@ function Register() {
                                 name="username"
                                 type="text"
                                 required
-                                maxLength={15}
+                                maxLength={10}
                                 onChange={(e) => setUsername(e.target.value)}
                                 className="appearance-none relative block w-full px-3 py-3 border border-gray-600 placeholder-gray-400 text-white rounded-lg bg-gray-700 focus:outline-none focus:ring-2 focus:ring-yellow-400 focus:border-transparent"
                                 placeholder="Nombre de usuario"
