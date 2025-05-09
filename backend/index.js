@@ -6,16 +6,23 @@ import authRoutes from './routes/auth.js';
 import userRoutes from './routes/users.js';
 import leaderboardRoutes from "./routes/leaderboard.js";
 import dotenv from 'dotenv';
+import { MongoClient, ServerApiVersion } from 'mongodb'
 
 // Cargar las variables de entorno
 dotenv.config();
+
+// CONECTARSE A MONGO ATLAS
+mongoose.connect(process.env.MONGO_URI, { useNewUrlParser: true, useUnifiedTopology: true })
+  .then(() => console.log("Conectado a MongoDB"))
+  .catch((err) => console.error("Error de conexión:", err));
+
+// CONECTARSE A MONGO LOCAL
+//mongoose.connect(process.env.MONGO_URL || 'mongodb://localhost:27017/doorbellclicker');
 
 const app = express();
 const PORT = 3000;
 
 app.use(cors());
-
-mongoose.connect(process.env.MONGO_URL || 'mongodb://localhost:27017/doorbellclicker');
 
 app.use(express.json());
 
