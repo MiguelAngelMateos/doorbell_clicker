@@ -270,7 +270,7 @@ function App() {
         localStorage.setItem('appliedUpgrades', JSON.stringify([]));
       }
       if (event.key === 't' || event.key === 'T') {
-        setClicksPerSecond(prev => prev + 1000);
+        setClicksPerSecond(prev => prev + 10);
       }
       if (event.key === 'w' || event.key === 'W') {
         setCount(prev => prev + 100000000);
@@ -357,7 +357,7 @@ function App() {
                 <div className="flex ml-auto w-[55%] menu_shadow h-screen">
                   <div className="flex flex-col gap-12 w-4/6 ml-auto mr-20 mt-10">
                     <Upgrades count={count} upgrades={upgrades} />
-                    <Shop calculateClicksPerSecond={calculateClicksPerSecond} shopItemCounts={shopItemCounts} />
+                    <Shop calculateClicksPerSecond={calculateClicksPerSecond} shopItemCounts={shopItemCounts} count={count} />
                   </div>
                 </div>
               </div>
