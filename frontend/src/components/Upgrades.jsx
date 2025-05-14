@@ -106,9 +106,9 @@ function Upgrades({ count, upgrades }) {
                     {/* Tooltip Mejora 1 */}
                     {hasUpgraded[0] && (
                     <div className='absolute left-1/2 transform -translate-x-1/2 mt-4 w-[280px] p-2 text-sm text-gray-700 bg-white border border-gray-300 rounded-md shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-opacity duration-200 z-10'>
-                        <p className='font-bold text-lg'>Mejora 1: Doble Click</p>
+                        <p className='font-bold text-lg'>Mejora 1: Quintuple Click</p>
                         <p>Descubres un bug en el timbre.</p>
-                        <p>Cada clic del ratón suma el doble de timbres.</p>
+                        <p>Cada clic del ratón suma el quintuple de timbres.</p>
                     </div>
                     )}
                 </div>
@@ -177,7 +177,7 @@ function Upgrades({ count, upgrades }) {
                     <div className='absolute left-1/2 transform -translate-x-1/2 mt-4 w-[280px] p-2 text-sm text-gray-700 bg-white border border-gray-300 rounded-md shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-opacity duration-200 z-10'>
                         <p className='font-bold text-lg'>Mejora 4: Golpe de suerte</p>
                         <p>Compras un billete de loteria y te toca el premio gordo!</p>
-                        <p>Añade 10 robots a tu tienda</p>
+                        <p>Añade 100 robots a tu tienda</p>
                     </div>
                     )}
                 </div>
@@ -199,7 +199,7 @@ function Upgrades({ count, upgrades }) {
                     {hasUpgraded[4] && (
                     <div className='absolute left-1/2 transform -translate-x-1/2 mt-4 w-[280px] p-2 text-sm text-gray-700 bg-white border border-gray-300 rounded-md shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-opacity duration-200 z-10'>
                         <p className='font-bold text-lg'>Mejora 5: Acción divina</p>
-                        <p>Jesucrito baja del cielo y te vendice con una mejora divina.</p>
+                        <p>Jesucristo baja del cielo y te vendice con una mejora divina.</p>
                         <p>Toda tu producción se multiplica x10</p>
                     </div>
                     )}

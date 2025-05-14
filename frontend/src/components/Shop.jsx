@@ -91,7 +91,7 @@ function Shop({ calculateClicksPerSecond, shopItemCounts, count }) {
                             <br />
                             <p>Suma 150 timbres por segundo</p>
                             <br />
-                            <p className='font-extrabold text-lg'>Produccion actual: {shopItemCounts.stick * 150}/s</p>
+                            <p className='font-extrabold text-lg'>Produccion actual: {shopItemCounts.gum * 150}/s</p>
                         </div>
                     </li>
                     <li onClick={() => calculateClicksPerSecond(500 * multiplier, 30000 * multiplier, 'roboticarm', multiplier)} className='relative group'>

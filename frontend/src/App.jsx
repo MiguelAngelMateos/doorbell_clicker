@@ -72,7 +72,7 @@ function App() {
       setIsBuffActive(true);
   
       setTimeout(() => {
-        setClickMultiplier(2);
+        setClickMultiplier(5);
         setIsBuffActive(false);
       }, 10000);
   
@@ -81,7 +81,7 @@ function App() {
         setIsBuffActive(true);
   
         setTimeout(() => {
-          setClickMultiplier(1);
+          setClickMultiplier(5);
           setIsBuffActive(false);
         }, 10000);
   
@@ -90,7 +90,7 @@ function App() {
       return () => clearInterval(buffInterval);
   
     } else if (upgradeId === 4) {
-      console.log("Mejora 4: Te regalan 10 máquinas picadoras");
+      console.log("Mejora 4: Te regalan 10 robots");
       new Audio(unlock).play();
   
       const roboticArmBoost = 100;
