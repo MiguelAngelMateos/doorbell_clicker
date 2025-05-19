@@ -263,17 +263,11 @@ function App() {
   // Trucos de desarrollador
   useEffect(() => {
     const handleKeyPress = (event) => {
-      if (event.key === 'r' || event.key === 'R') {
-        setCount(0);
-        setClicksPerSecond(0);
-        setShopItemCounts({ kid: 0, stick: 0, gum: 0, roboticarm: 0 });
-        localStorage.setItem('appliedUpgrades', JSON.stringify([]));
+      if (event.key === 'F1') {
+        setClicksPerSecond(prev => prev + 10); // Aumenta los clicks por segundo para ganar mas rapido
       }
-      if (event.key === 't' || event.key === 'T') {
-        setClicksPerSecond(prev => prev + 10);
-      }
-      if (event.key === 'w' || event.key === 'W') {
-        setCount(prev => prev + 100000000);
+      if (event.key === 'F2') {
+        setCount(prev => prev + 100000000); // Gana automaticamente
       }
     };
     window.addEventListener('keydown', handleKeyPress);
