@@ -3,6 +3,8 @@ import { Link, useNavigate } from 'react-router-dom';
 import arrow from '../assets/icons/arrow.png';
 import { useAuth } from "../context/AuthContext"; 
 
+export const API_URL = import.meta.env.VITE_API_URL;
+
 function Register() {
     const [username, setUsername] = useState("");
     const [email, setEmail] = useState("");
@@ -14,7 +16,7 @@ function Register() {
 
     const handleLogin = async (e) => {
         e.preventDefault();
-        const res = await fetch("http://localhost:3000/api/auth/register", {
+        const res = await fetch(`${API_URL}/api/auth/register`, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ username, email, password })

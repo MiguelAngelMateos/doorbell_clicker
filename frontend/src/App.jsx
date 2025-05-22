@@ -8,6 +8,8 @@ import { AuthProvider, useAuth } from "./context/AuthContext";
 import doorbell from './assets/icons/doorbell.png'
 import axios from 'axios'
 
+const API_URL = import.meta.env.VITE_API_URL;
+
 function App() {
   // Win condition
   const [hasWon, setHasWon] = useState(false);
@@ -199,7 +201,7 @@ function App() {
   // Llamada a la API para guardar resultado
   const saveResult = async () => {
     try {
-      const res = await fetch("http://localhost:3000/api/leaderboards/save", {
+      const res = await fetch(`${API_URL}/api/leaderboards/save`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

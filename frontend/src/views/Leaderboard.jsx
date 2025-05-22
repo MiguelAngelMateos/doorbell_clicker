@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import { useAuth } from "../context/AuthContext"; 
 import RankingUser from '../components/RankingUser';
 
+const API_URL = import.meta.env.VITE_API_URL;
 
 function Leaderboard() {
     const { isAuthenticated } = useAuth();
@@ -22,7 +23,7 @@ function Leaderboard() {
     useEffect(() => {
         const fetchTopPlayers = async () => {
             try {
-                const response = await fetch('http://localhost:3000/api/leaderboards/top');
+                const response = await fetch(`${API_URL}/api/leaderboards/top`);
                 if (!response.ok) {
                     throw new Error(`Error ${response.status}: ${response.statusText}`);
                 }
@@ -45,7 +46,7 @@ function Leaderboard() {
                     throw new Error("Token no encontrado");
                   }
               
-                  const response = await fetch('http://localhost:3000/api/leaderboards/currentpos', {
+                  const response = await fetch(`${API_URL}/api/leaderboards/currentpos`, {
                     method: 'GET',
                     headers: {
                       "Content-Type": "application/json",
