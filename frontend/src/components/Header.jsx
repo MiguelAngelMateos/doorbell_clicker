@@ -27,11 +27,11 @@ function Header({ count, clicksPerSecond, timer, formatTime }) {
                         <p>Buena suerte!</p>
                     </div>
                 </div>
-                <div className='ml-40'>
+                <div className='ml-20 w-[500px]'>
                     <h1 className="text-5xl bubble-text">{count.toFixed(0)} timbres</h1>
                     <span className="text-2xl">Timbres por segundo: {clicksPerSecond.toFixed(0)}</span>
                 </div>
-                <div>
+                <div className='ml-10 w-[400px] mt-7'>
                     <span className="text-2xl">Tiempo transcurrido: {formatTime(timer)}</span>
                 </div>
             </div>

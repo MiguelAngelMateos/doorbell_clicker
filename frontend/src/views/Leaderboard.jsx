@@ -7,52 +7,75 @@ import RankingUser from '../components/RankingUser';
 
 function Leaderboard() {
     const { isAuthenticated } = useAuth();
-    // array donde meter el top 100 players
-    const players = [];
+    const [players, setPlayers] = useState([]);
+    const [actualPlayer, setActualPlayer] = useState({});
 
-    // ejemplo de variable donde meter el jugador logueado en ese momento
-    const actualPlayer = {
-        username: "pepe",
-        record: "20:00",
-        position: 1
-    }
+    const formatMilliseconds = (ms) => {
+        const totalSeconds = Math.floor(ms / 1000);
+        const minutes = Math.floor(totalSeconds / 60);
+        const seconds = totalSeconds % 60;
 
-    // Ejemplo de como deberia ser un player con los campos que debe tener
-    players[0] = {
-        username: "pepe",
-        record: "20:00",
-        position: 1
-    }
-
-    players[1] = {
-        username: "maria",
-        record: "21:35",
-        position: 2
-    };
-    
-    players[2] = {
-        username: "lucas",
-        record: "22:10",
-        position: 3
-    };
-    
-    players[3] = {
-        username: "ana",
-        record: "23:45",
-        position: 4
-    };
-    
-    players[4] = {
-        username: "carlos",
-        record: "25:00",
-        position: 5
+        // Devolver el formato en minutos:segundos
+        return `${minutes}:${seconds.toString().padStart(2, '0')}`;
     };
 
+    useEffect(() => {
+        const fetchTopPlayers = async () => {
+            try {
+                const response = await fetch('http://localhost:3000/api/leaderboards/top');
+                if (!response.ok) {
+                    throw new Error(`Error ${response.status}: ${response.statusText}`);
+                }
+                const data = await response.json();
+                setPlayers(data.topPlayers);
+            } catch (err) {
+                console.log(err.message);
+            }
+        };
+
+        fetchTopPlayers();
+
+        if (isAuthenticated) {
+
+            const fetchActualPlayer = async () => {
+                try {
+                  const token = localStorage.getItem("token");
+              
+                  if (!token) {
+                    throw new Error("Token no encontrado");
+                  }
+              
+                  const response = await fetch('http://localhost:3000/api/leaderboards/currentpos', {
+                    method: 'GET',
+                    headers: {
+                      "Content-Type": "application/json",
+                      Authorization: token,
+                    }
+                  });
+              
+                  if (!response.ok) {
+                    throw new Error(`Error ${response.status}: ${response.statusText}`);
+                  }
+              
+                  const data = await response.json();
+                  setActualPlayer(data);
+                  console.log('Datos del usuario actual:', data);
+                } catch (err) {
+                  console.log('Error al obtener los datos:', err.message);
+                }
+              };
+
+            fetchActualPlayer();
+        }
+    }, []);
 
     // Creo una variable con un componente RankingUser por cada player
     const listPlayers = players.map((player, index) => 
-        <RankingUser key={`${player.username}-${index}`} player={player}></RankingUser>
-    )
+        <RankingUser 
+            key={`${player.username}-${index}`} 
+            player={{ ...player, record: formatMilliseconds(player.record) }} 
+        />
+    );
 
     return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-gray-900 to-black py-12 px-4 sm:px-6 lg:px-8">
@@ -82,7 +105,7 @@ function Leaderboard() {
                 {!isAuthenticated ? (
                     <p className="text-2xl opacity-70">Inicia sesión para ver tu posición</p>
                 ) : (
-                    <RankingUser key={100} player={actualPlayer}></RankingUser>
+                    <RankingUser key={100} player={{ ...actualPlayer, record: formatMilliseconds(actualPlayer.record) }} ></RankingUser>
                 )}
             </div>
         </div>

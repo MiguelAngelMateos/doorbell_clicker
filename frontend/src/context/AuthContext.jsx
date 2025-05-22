@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState } from 'react';
+import { createContext, useContext, useState, useEffect } from 'react';
 
 // Crear el contexto de autenticación
 const AuthContext = createContext();
@@ -48,7 +48,7 @@ export const AuthProvider = ({ children }) => {
   };
 
   // Usar useEffect para obtener datos del usuario al montar el componente
-  React.useEffect(() => {
+  useEffect(() => {
     console.log("entra en el react.useEffect")
     fetchUserData();
   }, [isAuthenticated]);  // Dependemos de isAuthenticated para actualizar la info del usuario

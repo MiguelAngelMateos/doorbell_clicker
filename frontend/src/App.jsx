@@ -6,8 +6,11 @@ import { Header, Objective, Upgrades, Shop } from './components';
 import { click, win, unlock } from './assets/sounds';
 import { AuthProvider, useAuth } from "./context/AuthContext";
 import doorbell from './assets/icons/doorbell.png'
+import axios from 'axios'
 
 function App() {
+  // Win condition
+  const [hasWon, setHasWon] = useState(false);
   const { isAuthenticated, username } = useAuth();
   // Declarar variables y localstorage del contador principal de timbres
   const [count, setCount] = useState(() => {
@@ -52,9 +55,9 @@ function App() {
   
     // Ejecutar la mejora
     if (upgradeId === 1) {
-      console.log("Mejora 1: Cada click suma 2");
+      console.log("Mejora 1: Cada click suma 5");
       new Audio(unlock).play();
-      setClickMultiplier(2);
+      setClickMultiplier(5);
   
     } else if (upgradeId === 2) {
       console.log("Mejora 2: La producción total aumenta un 20%");
@@ -65,20 +68,20 @@ function App() {
       console.log("Mejora 3: Buff de 10 segundos cada minuto");
       new Audio(unlock).play();
   
-      setClickMultiplier(100);
+      setClickMultiplier(10000);
       setIsBuffActive(true);
   
       setTimeout(() => {
-        setClickMultiplier(2);
+        setClickMultiplier(5);
         setIsBuffActive(false);
       }, 10000);
   
       const buffInterval = setInterval(() => {
-        setClickMultiplier(100);
+        setClickMultiplier(10000);
         setIsBuffActive(true);
   
         setTimeout(() => {
-          setClickMultiplier(1);
+          setClickMultiplier(5);
           setIsBuffActive(false);
         }, 10000);
   
@@ -87,10 +90,10 @@ function App() {
       return () => clearInterval(buffInterval);
   
     } else if (upgradeId === 4) {
-      console.log("Mejora 4: Te regalan 10 máquinas picadoras");
+      console.log("Mejora 4: Te regalan 10 robots");
       new Audio(unlock).play();
   
-      const roboticArmBoost = 10;
+      const roboticArmBoost = 100;
       const cpsPerRoboticArm = 250;
       const totalAddedCPS = roboticArmBoost * cpsPerRoboticArm;
   
@@ -139,21 +142,23 @@ function App() {
 
   // Actualiza automaticamente los timbres totales cada 0.10 segundos segun los timbres por segundo
   useEffect(() => {
-    if (hasWon) return;
-
-    const interval = setInterval(() => {
-      let production = clicksPerSecond / 20; // Producción base
+    if (hasWon) {
+      setCount(100000000);
+      return;
+    }
   
-      // Si el boost está activo, añade un 20% adicional
+    const interval = setInterval(() => {
+      let production = clicksPerSecond / 20;
+  
       if (isProductionBoostActive) {
-        production += production * 0.2; // Incrementar en un 20%
+        production += production * 0.2;
       }
   
-      setCount((prevCount) => prevCount + production); // Actualizar el contador
+      setCount((prevCount) => prevCount + production);
     }, 50);
   
     return () => clearInterval(interval);
-  }, [clicksPerSecond, isProductionBoostActive]);
+  }, [clicksPerSecond, isProductionBoostActive, hasWon])
 
   //Timer
   const [time, setTime] = useState(() => {
@@ -168,12 +173,17 @@ function App() {
   const intervalRef = useRef(null);
 
   useEffect(() => {
+    if (hasWon) {
+      clearInterval(intervalRef.current);
+      return;
+    }
+  
     intervalRef.current = setInterval(() => {
-      setTime(prev => prev + 10); // actualiza cada 10 ms
+      setTime(prev => prev + 10);
     }, 10);
-
+  
     return () => clearInterval(intervalRef.current);
-  }, []);
+  }, [hasWon]);
 
   const formatTime = (ms) => {
     const minutes = Math.floor(ms / 60000);
@@ -184,13 +194,11 @@ function App() {
       .padStart(2, '0')}.${milliseconds.toString().padStart(2, '0')}`;
   };
 
-  // Win condition
-  const [hasWon, setHasWon] = useState(false);
+  const token = localStorage.getItem("token");
 
   // Llamada a la API para guardar resultado
   const saveResult = async () => {
     try {
-      const token = localStorage.getItem("token");
       const res = await fetch("http://localhost:3000/api/leaderboards/save", {
         method: "POST",
         headers: {
@@ -202,16 +210,18 @@ function App() {
           time,
         }),
       });
-
+  
       const data = await res.json();
-
-      if (!res.ok) {
-        console.error("Error al guardar resultado:", data.message);
+  
+      if (!data.success) {
+        console.log("Error al guardar resultado:", data.message);
+        return false;
       } else {
-        console.log("Respuesta del servidor:", data.message);
+        return true;
       }
     } catch (error) {
-      console.error("Error de red al guardar resultado:", error.message);
+      console.log("Error de red al guardar resultado:", error.message);
+      return false;
     }
   };
 
@@ -220,8 +230,24 @@ function App() {
       setHasWon(true);
       clearInterval(intervalRef.current);
       new Audio(win).play();
-
-      saveResult();
+  
+      const handleWin = async () => {
+        const result = await saveResult();
+        if (result) {
+          console.log("Resultado guardado exitosamente.");
+          // Ejecutar script de python para enviar correo
+          const resEmail = await axios.get("http://localhost:3000/api/users/sendEmail", {
+            headers: {
+              Authorization: token,
+            },
+          });          
+          console.log(resEmail.data);
+        } else {
+          console.log("No es un nuevo récord:", result.message);
+        }
+      };
+  
+      handleWin();
     }
   }, [count]);
 
@@ -237,17 +263,11 @@ function App() {
   // Trucos de desarrollador
   useEffect(() => {
     const handleKeyPress = (event) => {
-      if (event.key === 'r' || event.key === 'R') {
-        setCount(0);
-        setClicksPerSecond(0);
-        setShopItemCounts({ kid: 0, stick: 0, gum: 0, roboticarm: 0 });
-        localStorage.setItem('appliedUpgrades', JSON.stringify([]));
+      if (event.key === 'F1') {
+        setClicksPerSecond(prev => prev + 10); // Aumenta los clicks por segundo para ganar mas rapido
       }
-      if (event.key === 't' || event.key === 'T') {
-        setClicksPerSecond(prev => prev + 1000);
-      }
-      if (event.key === 'w' || event.key === 'W') {
-        setCount(prev => prev + 100000000);
+      if (event.key === 'F2') {
+        setCount(prev => prev + 100000000); // Gana automaticamente
       }
     };
     window.addEventListener('keydown', handleKeyPress);
@@ -331,7 +351,7 @@ function App() {
                 <div className="flex ml-auto w-[55%] menu_shadow h-screen">
                   <div className="flex flex-col gap-12 w-4/6 ml-auto mr-20 mt-10">
                     <Upgrades count={count} upgrades={upgrades} />
-                    <Shop calculateClicksPerSecond={calculateClicksPerSecond} shopItemCounts={shopItemCounts} />
+                    <Shop calculateClicksPerSecond={calculateClicksPerSecond} shopItemCounts={shopItemCounts} count={count} />
                   </div>
                 </div>
               </div>

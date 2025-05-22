@@ -23,15 +23,19 @@ function RankingUser({ player }) {
     const { border, text } = colorClasses[player.position] || colorClasses.default;
     
     return (
-        <div className={`flex items-center justify-between p-3 bg-blanco border-10 ${border} rounded-4xl shadow-md mb-4 w-150`}>
-            <div className="flex items-center gap-8">
-                <span className={`text-5xl bubble-text ${text}`}>#{player.position}</span>
-                <span className="text-black text-4xl">{player.username}</span>
+        player.position === 0 ? (
+            <p className="text-2xl opacity-70">Completa una partida para ver tu posición</p>
+        ) : (
+            <div className={`flex items-center justify-between p-3 bg-blanco border-10 ${border} rounded-4xl shadow-md mb-4 w-150`}>
+                <div className="flex items-center gap-8">
+                    <span className={`text-5xl bubble-text ${text}`}>#{player.position}</span>
+                    <span className="text-black text-4xl">{player.username}</span>
+                </div>
+                <div>
+                    <span className="text-black text-2xl opacity-70">Tiempo: {player.record}</span>
+                </div>
             </div>
-            <div>
-                <span className="text-black text-2xl opacity-70">Tiempo: {player.record}</span>
-            </div>
-        </div>
+        )
     );
 }
 
