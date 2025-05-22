@@ -10,23 +10,32 @@ import dotenv from 'dotenv';
 // Cargar las variables de entorno
 dotenv.config();
 
-const app = express();
-const PORT = 3000;
-
-app.use(cors());
-
-mongoose.connect(process.env.MONGO_URL || 'mongodb://localhost:27017/doorbellclicker');
-
-app.use(express.json());
-
-app.get('/', (req, res) => {
-  res.json({ message: 'API is up' });
+mongoose.connect(process.env.MONGO_URL, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+})
+.then(() => {
+  console.log("🟢 Conexión a MongoDB exitosa");
+  startServer(); // Solo arrancar servidor si hay conexión
+})
+.catch((err) => {
+  console.error("🔴 Error al conectar a MongoDB:", err.message);
+  process.exit(1); // Terminar proceso si no hay DB
 });
 
-app.use("/api/auth", authRoutes);
-app.use("/api/users", userRoutes);
-app.use("/api/leaderboards", leaderboardRoutes);
+function startServer() {
+  const app = express();
+  app.use(express.json());
+  app.use(cors());
+  const PORT = process.env.PORT || 3000;
 
-app.listen(PORT, () => {
-  console.log(`Servidor backend en http://localhost:${PORT}`);
-});
+  app.get("/", (_, res) => res.send("API funcionando"));
+
+  app.use("/api/auth", authRoutes);
+  app.use("/api/users", userRoutes);
+  app.use("/api/leaderboards", leaderboardRoutes);
+
+  app.listen(PORT, () => {
+    console.log(`🚀 Servidor backend en http://localhost:${PORT}`);
+  });
+}
