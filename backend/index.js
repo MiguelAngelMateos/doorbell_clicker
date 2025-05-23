@@ -27,12 +27,15 @@ mongoose.connect(mongoURI, {
 });
 
 function startServer() {
+  console.log("Iniciando el servidor...");
   const app = express();
   app.use(express.json());
+  console.log("Url frontend: " + process.env.FRONTEND_URL)
   app.use(cors({
     origin: process.env.FRONTEND_URL || "http://localhost:5173",
     credentials: true, // si estás usando cookies o auth headers
   }));
+  
 
   const PORT = process.env.PORT || 3000;
 

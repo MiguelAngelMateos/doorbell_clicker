@@ -238,7 +238,7 @@ function App() {
         if (result) {
           console.log("Resultado guardado exitosamente.");
           // Ejecutar script de python para enviar correo
-          const resEmail = await axios.get("http://localhost:3000/api/users/sendEmail", {
+          const resEmail = await axios.get(`${API_URL}/api/users/sendEmail`, {
             headers: {
               Authorization: token,
             },

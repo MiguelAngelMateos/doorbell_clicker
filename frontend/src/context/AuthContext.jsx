@@ -1,4 +1,5 @@
 import { createContext, useContext, useState, useEffect } from 'react';
+import { API_URL } from '../views/Login';
 
 // Crear el contexto de autenticación
 const AuthContext = createContext();
@@ -28,7 +29,7 @@ export const AuthProvider = ({ children }) => {
     if (token) {
       setIsAuthenticated(true);
       try {
-        const response = await fetch("http://localhost:3000/api/users/username", {
+        const response = await fetch(`${API_URL}/api/users/username`, {
           headers: {
             Authorization: `${token}`,
           },
