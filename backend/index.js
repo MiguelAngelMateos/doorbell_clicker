@@ -10,9 +10,8 @@ import { MongoClient, ServerApiVersion } from 'mongodb'
 
 // Cargar las variables de entorno
 dotenv.config();
-console.log("MONGO_URL cargado desde .env:", process.env.MONGO_URL);
-const mongoURI = process.env.MONGO_URL || 'mongodb://localhost:27017/doorbellclicker';
-
+const mongoURI = process.env.MONGO_URL || 'mongodb://mongo:27017/doorbellclicker';
+console.log("Conectando a MongoDB en: " + mongoURI);
 mongoose.connect(mongoURI, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
@@ -30,10 +29,13 @@ function startServer() {
   console.log("Iniciando el servidor...");
   const app = express();
   app.use(express.json());
-  console.log("Url frontend: " + process.env.FRONTEND_URL)
+  const corsOrigin = process.env.FRONTEND_URL || "http://localhost:5173";
+  console.log("🌐 Configuración de CORS:");
+  console.log("👉 Origin permitido:", corsOrigin);
+
   app.use(cors({
-    origin: process.env.FRONTEND_URL || "http://localhost:5173",
-    credentials: true, // si estás usando cookies o auth headers
+    origin: corsOrigin,
+    credentials: true,
   }));
   
 

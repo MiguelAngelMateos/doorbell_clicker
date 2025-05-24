@@ -10,8 +10,6 @@ services:
     build: ./backend
     ports:
       - "3000:3000"
-    environment:
-      - MONGO_URL=mongodb+srv://doorbell_admin:doorbell_admin@cluster0.u7megvs.mongodb.net/doorbell_clicker?retryWrites=true&w=majority&appName=Cluster0
     depends_on:
       - mongo
     volumes:

@@ -3,7 +3,8 @@
     "type": "module",
     "scripts": {
         "dev": "nodemon index.js",
-        "start": "node index.js"
+        "start": "node index.js",
+        "docker-build": "docker build -t joaquinjulian/doorbell_clicker-backend:latest . && docker push joaquinjulian/doorbell_clicker-backend:latest"
     },
     "dependencies": {
         "bcryptjs": "^3.0.2",
