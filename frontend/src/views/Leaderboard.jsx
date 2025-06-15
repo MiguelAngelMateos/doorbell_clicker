@@ -79,30 +79,30 @@ function Leaderboard() {
     );
 
     return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-gray-900 to-black py-12 px-4 sm:px-6 lg:px-8">
+    <div className="h-screen flex items-center justify-center bg-gradient-to-br from-gray-900 to-black px-4 sm:px-6 lg:px-8">
         <img
             src="/images/wallpaper.png"
             alt="Fondo"
             className="absolute top-0 left-0 w-full h-full object-cover z-0 opacity-50"
         />
         
-        <div className="w-200 h-200 space-y-8 bg-gray-800 bg-opacity-80 p-10 rounded-2xl border-2 border-yellow-400 shadow-2xl relative z-10">
-            <Link to="/" className="absolute top-4 left-18">
-                <img src={arrow} alt="Flecha para volver" className="w-14 h-14" />
+        <div className="h-3/4 max-w-md w-full bg-gray-800 bg-opacity-80 px-10 pt-15 pb-10 rounded-2xl border-2 border-yellow-400 shadow-2xl relative z-10">
+            <Link to="/" className="absolute top-4 left-6">
+                <img src={arrow} alt="Flecha para volver" className="w-8 h-8" />
             </Link>
             {!isAuthenticated && (
                 <Link to="/login" className="absolute top-4 right-10 text-xl">
-                    Iniciar sesión / Registrarte
+                    Iniciar sesión/Registrarte
                 </Link>
             )}
-            <div className="mt-12 h-120 max-h-120 flex flex-col items-center overflow-auto no-scrollbar">
+            <div className="flex flex-col items-center overflow-auto no-scrollbar h-3/4">
                 <div className="flex w-full justify-center items-center text-4xl pb-4 sticky top-0 z-10 bg-gray-800 bg-opacity-80">
                     <h1>Clasificación</h1>
                 </div>
                 {listPlayers}
             </div>
             <div className="w-full text-center flex flex-col items-center">
-                <h2 className="text-4xl mb-4">Tu posición</h2>
+                <h2 className="text-4xl py-4">Tu posición</h2>
                 {!isAuthenticated ? (
                     <p className="text-2xl opacity-70">Inicia sesión para ver tu posición</p>
                 ) : (

@@ -315,46 +315,62 @@ function App() {
         <Route
           path="/"
           element={
-            <div className="relative h-screen overflow-hidden">
-              <img
-                src="/images/wallpaper.png"
-                alt="Fondo"
-                className="absolute top-0 left-0 w-full h-full object-cover z-[-1]"
-              />
-              <div className=''>
+            <div 
+              className="relative min-h-screen overflow-hidden bg-cover bg-center bg-no-repeat"
+              style={{
+                backgroundImage: `url('/images/wallpaper.png')`
+              }}
+            >
+              <div className='max-w-screen'>
                 <Header count={count} clicksPerSecond={clicksPerSecond} timer={time} formatTime={formatTime} />
-                <img
-                  onClick={handleClick}
-                  draggable="false"
-                  src={doorbell}
-                  alt="Doorbell"
-                  className="absolute left-[16%] top-[52%] transform -translate-x-1/2 -translate-y-1/2 w-[20%] cursor-pointer"
-                />
-                {floatingNumbers.map((num) => (
-                  <div
-                    key={num.id}
-                    className="floating-number text-green-500 text-xl font-bold select-none pointer-events-none"
-                    style={{
-                      position: 'absolute',
-                      left: num.x + 5,
-                      top: num.y - 20,
-                    }}
-                  >
-                    {num.value}
+                
+                {/* Layout responsive: Mobile (vertical) vs Desktop/Tablet (horizontal) */}
+                <div className="flex flex-col sm:flex-row">
+                  
+                  {/* Sección de la campana - Mobile: arriba, Desktop: izquierda */}
+                  <div className="relative flex flex-col items-center justify-center p-4 pt-10">
+                      <img
+                        onClick={handleClick}
+                        draggable="false"
+                        src={doorbell}
+                        alt="Doorbell"
+                        className="cursor-pointer h-50"
+                      />
+                    
+                      
                   </div>
-                ))}
-                <div className='fixed top-[10vh] left-[-50px] z-10 w-[1000px]'>
-                  {hasWon ? (
-                      <Objective title="Has ganado!" content="Has alcanzado 100 millones de timbres." className="hasWon" onRestart={handleRestart}/>
-                  ) : (
-                      <Objective title="Objetivo final" content="Timbra 100 millones de veces!!" />
-                  )}
-                </div>
-                <div className="flex ml-auto w-[55%] menu_shadow h-screen">
-                  <div className="flex flex-col gap-12 w-4/6 ml-auto mr-20 mt-10">
-                    <Upgrades count={count} upgrades={upgrades} />
-                    <Shop calculateClicksPerSecond={calculateClicksPerSecond} shopItemCounts={shopItemCounts} count={count} />
+
+                  {/* Sección de menús - Mobile: abajo, Desktop: derecha */}
+                  <div className="flex-1 menu_shadow_mobile">
+                    <div className='flex flex-col p-5 gap-10'>
+                      <div className='w-full overflow-hidden'>
+                        <Upgrades count={count} upgrades={upgrades} />
+                      </div>
+                      <div className='w-full overflow-hidden'>
+                        <Shop 
+                          calculateClicksPerSecond={calculateClicksPerSecond} 
+                          shopItemCounts={shopItemCounts} 
+                          count={count} 
+                        />
+                      </div>
+                    </div>
+                    <div className='flex w-full justify-center items-center flex-col gap-4 p-5'>
+                      {hasWon ? (
+                        <Objective 
+                          title="Has ganado!" 
+                          content="Has alcanzado 100 millones de timbres." 
+                          className="hasWon" 
+                          onRestart={handleRestart}
+                        />
+                      ) : (
+                        <Objective 
+                          title="Objetivo final" 
+                          content="Timbra 100 millones de veces!!" 
+                        />
+                      )}
+                    </div>
                   </div>
+                  
                 </div>
               </div>
             </div>

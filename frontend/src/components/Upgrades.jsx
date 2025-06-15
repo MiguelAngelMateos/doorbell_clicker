@@ -81,7 +81,7 @@ function Upgrades({ count, upgrades }) {
 
     return (
         <div className="flex w-full flex-col">
-            <div className="flex justify-between w-full">
+            <div className="flex justify-between w-full gap-4">
                 <h2 className="bubble-text text-6xl">Mejoras</h2>
                 <span className="mt-auto">
                 {nextUpgrade === "No hay más mejoras"
@@ -89,11 +89,11 @@ function Upgrades({ count, upgrades }) {
                     : `Siguiente mejora: ${count.toFixed(0)}/${nextUpgrade}`}
                 </span>
             </div>
-            <div className="flex mt-4 justify-between">
+            <div className="scroll-visible flex pt-4 pb-2 gap-4 overflow-x-auto overflow-y-hidden">
                 {/* Mejora 1 */}
                 <div className='relative group w-fit'>
                     <div
-                    className={`button_upgrades w-26 h-26 ${
+                    className={`button_upgrades w-18 h-18 ${
                         hasUpgraded[0] ? '' : 'button_upgrades_unlocked'
                     }`}
                     >
@@ -116,7 +116,7 @@ function Upgrades({ count, upgrades }) {
                 {/* Mejora 2 */}
                 <div className='relative group w-fit'>
                     <div
-                    className={`button_upgrades w-26 h-26 ${
+                    className={`button_upgrades w-18 h-18 ${
                         hasUpgraded[1] ? '' : 'button_upgrades_unlocked'
                     }`}
                     >
@@ -139,7 +139,7 @@ function Upgrades({ count, upgrades }) {
                 {/* Mejora 3 */}
                 <div className='relative group w-fit'>
                     <div
-                    className={`button_upgrades w-26 h-26 ${
+                    className={`button_upgrades w-18 h-18 ${
                         hasUpgraded[2] ? '' : 'button_upgrades_unlocked'
                     }`}
                     >
@@ -162,7 +162,7 @@ function Upgrades({ count, upgrades }) {
                 {/* Mejora 4 */}
                 <div className='relative group w-fit'>
                     <div
-                    className={`button_upgrades w-26 h-26 ${
+                    className={`button_upgrades w-18 h-18 ${
                         hasUpgraded[3] ? '' : 'button_upgrades_unlocked'
                     }`}
                     >
@@ -185,7 +185,7 @@ function Upgrades({ count, upgrades }) {
                 {/* Mejora 5 */}
                 <div className='relative group w-fit'>
                     <div
-                    className={`button_upgrades w-26 h-26 ${
+                    className={`button_upgrades w-18 h-18 ${
                         hasUpgraded[4] ? '' : 'button_upgrades_unlocked'
                     }`}
                     >
@@ -204,7 +204,8 @@ function Upgrades({ count, upgrades }) {
                     </div>
                     )}
                 </div>
-                </div>
+            </div>
+            <p className="text-sm text-gray-400 justify-center flex">← desliza para ver más →</p>
 
         </div>
     );

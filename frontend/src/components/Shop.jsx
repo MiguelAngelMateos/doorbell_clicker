@@ -32,10 +32,10 @@ function Shop({ calculateClicksPerSecond, shopItemCounts, count }) {
 
     return (
         <div className='flex items-center justify-center flex-col'>
-            <h2 className="text-6xl bubble-text mb-2">Tienda</h2> {/* Menos margen superior */}
+            <h2 className="text-6xl bubble-text">Tienda</h2> {/* Menos margen superior */}
 
             {/* Contenedor de los botones para seleccionar el multiplicador */}
-            <div className="flex gap-4 mb-4">
+            <div className="flex gap-4">
                 <button
                     onClick={() => setMultiplier(1)}
                     className={`px-4 py-2 text-white cursor-pointer ${multiplier === 1 ? 'text-bold text-2xl' : 'opacity-80 text-semibold text-xl'}`}
@@ -56,7 +56,7 @@ function Shop({ calculateClicksPerSecond, shopItemCounts, count }) {
                 </button>
             </div>
             {/* Lista de objetos de la tienda */}
-            <div className="h-[200px] 2xl:h-[460px] overflow-y-auto p-2">
+            <div className="overflow-y-auto p-2 w-full">
                 <ul className='flex flex-col gap-2'>
                     <li onClick={() => calculateClicksPerSecond(1 * multiplier, 25 * multiplier, 'kid', multiplier)} className='relative group'>
                         <ShopItem name="Niño travieso" price={25 * multiplier} image={kid} itemCount={shopItemCounts.kid} unlocked={unlocked[0]}/>

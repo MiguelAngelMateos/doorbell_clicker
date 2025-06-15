@@ -59,7 +59,6 @@ body {
   box-sizing: border-box;
   border: 2px solid var(--button_outline_color);
   border-radius: var(--button_radius);
-  padding: 2.25em 1.5em; /* Parte blanca más alta (triple altura) */
   color: var(--button_outline_color);
   transform: translateY(-0.2em);
   transition: transform 0.1s ease;
@@ -100,7 +99,17 @@ body {
   color: var(--button_outline_color);
 }
 
-
+.menu_shadow_mobile {
+  background: linear-gradient(
+    to top, 
+    rgba(69, 63, 57, 0.6) 80%, 
+    rgba(69, 63, 57, 0.4) 85%, 
+    rgba(69, 63, 57, 0.2) 92%, 
+    rgba(69, 63, 57, 0.1) 97%,
+    rgba(69, 63, 57, 0) 99%
+  );
+}
+ 
 .menu_shadow {
   background: linear-gradient(
     to left, 
@@ -132,3 +141,4 @@ body {
   transform: translate(0.05em, 0.05em);
   box-shadow: 0.05em 0.05em;
 }
+
