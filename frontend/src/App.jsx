@@ -316,37 +316,52 @@ function App() {
           path="/"
           element={
             <div 
-              className="relative min-h-screen overflow-hidden bg-cover bg-center bg-no-repeat"
+              className="relative min-h-screen sm:max-h-screen overflow-hidden bg-cover bg-center bg-no-repeat"
               style={{
                 backgroundImage: `url('/images/wallpaper.png')`
               }}
             >
-              <div className='max-w-screen'>
+              <div className="max-w-screen min-h-screen sm:max-h-screen sm:h-screen lg:max-h-screen flex flex-col">
                 <Header count={count} clicksPerSecond={clicksPerSecond} timer={time} formatTime={formatTime} />
                 
-                {/* Layout responsive: Mobile (vertical) vs Desktop/Tablet (horizontal) */}
-                <div className="flex flex-col sm:flex-row">
+                {/* Este div va a ocupar el espacio restante debajo del header */}
+                <div className="flex flex-col sm:flex-row flex-1 overflow-hidden">
                   
                   {/* Sección de la campana - Mobile: arriba, Desktop: izquierda */}
-                  <div className="relative flex flex-col items-center justify-center p-4 pt-10">
+                  <div className='lg:w-1/2 flex flex-col justify-between xl:justify-center xl:gap-10 xl:pb-10'>
+                    <div className="relative flex flex-col items-center justify-center p-4 pt-10">
                       <img
                         onClick={handleClick}
                         draggable="false"
                         src={doorbell}
                         alt="Doorbell"
-                        className="cursor-pointer h-50"
+                        className="cursor-pointer h-50 sm:h-60 xl:h-80"
                       />
-                    
-                      
+                    </div>
+                    <div className='w-full hidden sm:block sm:pb-5 sm:pl-5'>
+                      {hasWon ? (
+                        <Objective 
+                          title="Has ganado!" 
+                          content="Has alcanzado 100 millones de timbres." 
+                          className="hasWon" 
+                          onRestart={handleRestart}
+                        />
+                      ) : (
+                        <Objective 
+                          title="Objetivo final" 
+                          content="Timbra 100 millones de veces!!" 
+                        />
+                      )}
+                    </div>
                   </div>
 
                   {/* Sección de menús - Mobile: abajo, Desktop: derecha */}
-                  <div className="flex-1 menu_shadow_mobile">
-                    <div className='flex flex-col p-5 gap-10'>
-                      <div className='w-full overflow-hidden'>
+                  <div className="flex-1 menu_shadow scrollbar overflow-y-auto">
+                    <div className='flex flex-col p-5 gap-10 sm:justify-center sm:items-center'>
+                      <div className='w-full sm:w-auto overflow-hidden'>
                         <Upgrades count={count} upgrades={upgrades} />
                       </div>
-                      <div className='w-full overflow-hidden'>
+                      <div className='w-full sm:w-auto overflow-hidden'>
                         <Shop 
                           calculateClicksPerSecond={calculateClicksPerSecond} 
                           shopItemCounts={shopItemCounts} 
@@ -354,7 +369,7 @@ function App() {
                         />
                       </div>
                     </div>
-                    <div className='flex w-full justify-center items-center flex-col gap-4 p-5'>
+                    <div className='flex w-full justify-center items-center flex-col gap-4 p-5 sm:hidden'>
                       {hasWon ? (
                         <Objective 
                           title="Has ganado!" 

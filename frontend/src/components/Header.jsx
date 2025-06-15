@@ -27,9 +27,9 @@ function Header({ count, clicksPerSecond, timer, formatTime }) {
 
     return (
         <header className="w-full bg-[#202020] flex flex-col py-4 justify-between items-center relative
-        sm:flex-row sm:items-start">
-            <div className="flex flex-col text-center w-full">
-                <div className='absolute sm:relative group'>
+        sm:flex-row sm:items-center sm:px-10">
+            <div className="flex flex-col text-center w-full sm:block sm:w-1/2">
+                <div className='absolute group'>
                     <img src={incognite} alt="ayuda" className='bg-gray-200 rounded-full p-1 w-8 ml-5 cursor-pointer' onClick={() => managePopup(divRulesRef)}/>
                     <div ref={divRulesRef} className='absolute bg-white rounded-lg w-80 z-10 ml-4 mt-2 text-black p-4 hidden'>
                         <p className='font-extrabold text-xl'>Bienvenido a Doorbell Clicker!</p>
@@ -68,12 +68,12 @@ function Header({ count, clicksPerSecond, timer, formatTime }) {
             </div>
 
             <div className="flex mr-20 gap-18 text-2xl hidden 
-            sm:flex sm:flex-col sm:mr-0 sm:gap-4 sm:h-full sm:justify-start">
+            sm:flex sm:flex-col xl:flex-row xl:gap-20 sm:mr-0 sm:gap-4 sm:h-full sm:justify-center">
                 {isAuthenticated ? ( 
                     <>
                         <Link to="/Leaderboard">Clasificación</Link>
                         <p>Usuario: {username}</p>
-                        <button onClick={handleLogout} className="text-red-500 cursor-pointer">Cerrar sesión</button>
+                        <button onClick={handleLogout} className="sm:flex sm:justify-start text-red-500 cursor-pointer">Cerrar sesión</button>
                     </>
                 ) : ( 
                     <>

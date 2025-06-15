@@ -205,7 +205,7 @@ function Upgrades({ count, upgrades }) {
                     )}
                 </div>
             </div>
-            <p className="text-sm text-gray-400 justify-center flex">← desliza para ver más →</p>
+            <p className="text-sm text-gray-400 justify-center flex sm:hidden">← desliza para ver más →</p>
 
         </div>
     );
