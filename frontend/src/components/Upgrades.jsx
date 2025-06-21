@@ -89,7 +89,7 @@ function Upgrades({ count, upgrades }) {
                     : `Siguiente mejora: ${count.toFixed(0)}/${nextUpgrade}`}
                 </span>
             </div>
-            <div className="scroll-visible flex pt-4 pb-2 gap-4 overflow-x-auto overflow-y-hidden">
+            <div className="scroll-visible scrollbar-hide flex pt-4 pb-2 gap-4 overflow-x-auto overflow-y-hidden">
                 {/* Mejora 1 */}
                 <div className='relative group w-fit'>
                     <div

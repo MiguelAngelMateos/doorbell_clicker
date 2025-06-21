@@ -34,7 +34,6 @@ function App() {
 
   // Recibe las compras de la tienda y aumenta el contador de timbres por segundo
   const calculateClicksPerSecond = (addValue, cost, item, multiplier) => {
-    console.log(cost)
     if (cost <= localStorage.getItem('count')) {
       new Audio(click).play();
       setClicksPerSecond(clicksPerSecond + addValue);
@@ -356,7 +355,7 @@ function App() {
                   </div>
 
                   {/* Sección de menús - Mobile: abajo, Desktop: derecha */}
-                  <div className="flex-1 menu_shadow scrollbar overflow-y-auto">
+                  <div className="flex-1 menu_shadow scrollbar-hide overflow-y-auto">
                     <div className='flex flex-col p-5 gap-10 sm:justify-center sm:items-center'>
                       <div className='w-full sm:w-auto overflow-hidden'>
                         <Upgrades count={count} upgrades={upgrades} />
