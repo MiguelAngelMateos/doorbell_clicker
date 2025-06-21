@@ -328,7 +328,7 @@ function App() {
                 <div className="flex flex-col sm:flex-row flex-1 overflow-hidden">
                   
                   {/* Sección de la campana - Mobile: arriba, Desktop: izquierda */}
-                  <div className='lg:w-1/2 flex flex-col justify-between xl:justify-center xl:gap-10 xl:pb-10'>
+                  <div className='lg:w-1/2 flex flex-col justify-between xl:justify-center xl:gap-10'>
                     <div className="relative flex flex-col items-center justify-center p-4 pt-10">
                       <img
                         onClick={handleClick}
@@ -338,7 +338,7 @@ function App() {
                         className="cursor-pointer h-50 sm:h-60 xl:h-80"
                       />
                     </div>
-                    <div className='w-full hidden sm:block sm:pb-5 sm:pl-5'>
+                    <div className='w-full hidden sm:block sm:pb-5 sm:pl-5 xl:absolute xl:left-0 xl:bottom-0'>
                       {hasWon ? (
                         <Objective 
                           title="Has ganado!" 

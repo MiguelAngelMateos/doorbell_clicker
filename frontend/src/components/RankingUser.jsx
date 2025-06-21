@@ -27,12 +27,12 @@ function RankingUser({ player }) {
             <p className="text-2xl opacity-70">Completa una partida para ver tu posición</p>
         ) : (
             <div className={`flex items-center justify-between p-3 bg-blanco border-10 ${border} rounded-4xl shadow-md mb-4 w-full`}>
-                <div className="flex items-center gap-2 w-full">
+                <div className="flex items-center gap-2 xl:gap-4 w-full">
                     <span className={`text-2xl bubble-text ${text} flex-shrink-0`}>#{player.position}</span>
-                    <span className="text-black text-1xl w-1/3 truncate flex-shrink-0">
+                    <span className="text-black text-1xl w-1/3 truncate flex-shrink-0 xl:text-2xl">
                         {player.username}
                     </span>
-                    <span className="text-black text-1xl opacity-70 flex-1 min-w-0">
+                    <span className="text-black text-1xl opacity-70 flex-1 min-w-0 xl:text-xl xl:text-end">
                         Tiempo: {player.record}
                     </span>
                 </div>

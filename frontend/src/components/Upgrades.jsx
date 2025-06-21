@@ -93,7 +93,7 @@ function Upgrades({ count, upgrades }) {
                 {/* Mejora 1 */}
                 <div className='relative group w-fit'>
                     <div
-                    className={`button_upgrades w-18 h-18 ${
+                    className={`button_upgrades w-18 h-18 xl:w-24 xl:h-24 ${
                         hasUpgraded[0] ? '' : 'button_upgrades_unlocked'
                     }`}
                     >
@@ -116,7 +116,7 @@ function Upgrades({ count, upgrades }) {
                 {/* Mejora 2 */}
                 <div className='relative group w-fit'>
                     <div
-                    className={`button_upgrades w-18 h-18 ${
+                    className={`button_upgrades w-18 h-18 xl:w-24 xl:h-24 ${
                         hasUpgraded[1] ? '' : 'button_upgrades_unlocked'
                     }`}
                     >
@@ -139,7 +139,7 @@ function Upgrades({ count, upgrades }) {
                 {/* Mejora 3 */}
                 <div className='relative group w-fit'>
                     <div
-                    className={`button_upgrades w-18 h-18 ${
+                    className={`button_upgrades w-18 h-18 xl:w-24 xl:h-24 ${
                         hasUpgraded[2] ? '' : 'button_upgrades_unlocked'
                     }`}
                     >
@@ -162,7 +162,7 @@ function Upgrades({ count, upgrades }) {
                 {/* Mejora 4 */}
                 <div className='relative group w-fit'>
                     <div
-                    className={`button_upgrades w-18 h-18 ${
+                    className={`button_upgrades w-18 h-18 xl:w-24 xl:h-24 ${
                         hasUpgraded[3] ? '' : 'button_upgrades_unlocked'
                     }`}
                     >
@@ -185,7 +185,7 @@ function Upgrades({ count, upgrades }) {
                 {/* Mejora 5 */}
                 <div className='relative group w-fit'>
                     <div
-                    className={`button_upgrades w-18 h-18 ${
+                    className={`button_upgrades w-18 h-18 xl:w-24 xl:h-24 ${
                         hasUpgraded[4] ? '' : 'button_upgrades_unlocked'
                     }`}
                     >

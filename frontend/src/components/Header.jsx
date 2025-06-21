@@ -68,7 +68,7 @@ function Header({ count, clicksPerSecond, timer, formatTime }) {
             </div>
 
             <div className="flex mr-20 gap-18 text-2xl hidden 
-            sm:flex sm:flex-col xl:flex-row xl:gap-20 sm:mr-0 sm:gap-4 sm:h-full sm:justify-center">
+            sm:flex sm:flex-col xl:flex-row xl:gap-20 sm:mr-0 sm:gap-4 sm:h-full sm:justify-center xl:items-center">
                 {isAuthenticated ? ( 
                     <>
                         <Link to="/Leaderboard">Clasificación</Link>
