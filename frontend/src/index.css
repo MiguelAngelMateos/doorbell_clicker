@@ -1,10 +1,23 @@
 @import "tailwindcss";
 
-body {
+html, body, #root {
   font-family: 'Secret Thief', sans-serif;
   color: white;
   min-height: 100vh;
   margin: 0;
+  box-sizing: border-box;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+/* Cuando la pantalla sea de tipo portátil (ej. >= 768px de ancho) */
+@media (min-width: 768px) {
+  html, body, #root {
+    height: 100vh;     /* Limita el alto al 100% del viewport */
+    overflow: hidden;  /* Opcional: evita scroll si no lo quieres */
+  }
 }
 
 @theme {
@@ -98,8 +111,8 @@ body {
   background: var(--button_color);
   color: var(--button_outline_color);
 }
-
-.menu_shadow_mobile {
+ 
+.menu_shadow {
   background: linear-gradient(
     to top, 
     rgba(69, 63, 57, 0.6) 80%, 
@@ -109,15 +122,17 @@ body {
     rgba(69, 63, 57, 0) 99%
   );
 }
- 
-.menu_shadow {
-  background: linear-gradient(
-    to left, 
-    rgba(69, 63, 57, 0.6) 47%, 
-    rgba(69, 63, 57, 0.3) 76%, 
-    rgba(69, 63, 57, 0.1) 88%, 
-    rgba(69, 63, 57, 0) 100%
-  );
+
+@media (min-width: 640px) {
+  .menu_shadow {
+    background: linear-gradient(
+      to left, 
+      rgba(69, 63, 57, 0.6) 47%, 
+      rgba(69, 63, 57, 0.3) 76%, 
+      rgba(69, 63, 57, 0.1) 88%, 
+      rgba(69, 63, 57, 0) 100%
+    );
+  }
 }
 
 .win-button {

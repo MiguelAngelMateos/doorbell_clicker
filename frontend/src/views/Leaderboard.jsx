@@ -86,7 +86,7 @@ function Leaderboard() {
             className="absolute top-0 left-0 w-full h-full object-cover z-0 opacity-50"
         />
         
-        <div className="h-3/4 max-w-md w-full bg-gray-800 bg-opacity-80 px-10 pt-15 pb-10 rounded-2xl border-2 border-yellow-400 shadow-2xl relative z-10">
+        <div className="h-3/4 max-w-md w-full bg-gray-800 bg-opacity-80 px-10 pt-15 pb-10 rounded-2xl border-2 border-yellow-400 shadow-2xl relative z-10 sm:h-8/9">
             <Link to="/" className="absolute top-4 left-6">
                 <img src={arrow} alt="Flecha para volver" className="w-8 h-8" />
             </Link>

@@ -10,7 +10,6 @@ function Shop({ calculateClicksPerSecond, shopItemCounts, count }) {
     const [unlocked, setUnlocked] = useState([false, false, false, false]);
 
     useEffect(() => {
-        console.log(unlocked)
         if (count >= 25 / 2 && !unlocked[0]) {
             const newUnlocked = [...unlocked];
             newUnlocked[0] = true;
